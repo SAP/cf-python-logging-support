@@ -1,6 +1,6 @@
 ''' setup.py '''
-import re
 import ast
+import re
 
 from setuptools import find_packages
 from setuptools import setup
@@ -16,6 +16,7 @@ setup(
     license='Apache License, Version 2.0',
     author='SAP',
     description='Cloud Foundry Python Logging Support',
+    long_description_content_type='text/x-rst',
     packages=find_packages(include=['cf_logging*']),
     include_package_data=True,
     zip_safe=False,
@@ -23,7 +24,7 @@ setup(
     install_requires=[],
     classifiers=[  # http://pypi.python.org/pypi?%3Aaction=list_classifiers
         'Development Status :: 4 - Beta',
-        'Framework :: Flask'
+        'Framework :: Flask',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent',

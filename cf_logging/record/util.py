@@ -18,7 +18,7 @@ def get_vcap_param(param_name, default=None):
     return VCAP_APPLICATION.get(param_name, default)
 
 def epoch_nano_second(datetime_):
-    """ Returns the nanaseconds since epoch time """
+    """ Returns the nanoseconds since epoch time """
     return int((datetime_ - UNIX_EPOCH).total_seconds()) * 1000000000 + datetime_.microsecond * 1000
 
 def iso_time_format(datetime_):
@@ -28,7 +28,7 @@ def iso_time_format(datetime_):
         datetime_.minute, datetime_.second, int(datetime_.microsecond / 1000))
 
 def time_delta_ms(start, end):
-    """ Returns the delta time between to datatime objects """
+    """ Returns the delta time between to datetime objects """
     time_delta = end - start
     return int(time_delta.total_seconds()) * 1000 + \
            int(time_delta.microseconds / 1000)

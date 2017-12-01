@@ -7,11 +7,11 @@ CORRELATION_ID_HEADERS = ['X-Correlation-ID',
 
 class RequestReader(object):
     """
-        Helper class help to extract logging-relevant information from HTTP request object
+        Helper class for extracting logging-relevant information from HTTP request object
     """
     def get_correlation_id(self, request):
         """
-        We assume that request is valid request object.
+        We assume that the request is a valid request object.
 
         :param request:
         """
@@ -27,7 +27,7 @@ class RequestReader(object):
     # pylint: disable=no-self-use
     def get_http_header(self, request, header_name, default=None):
         """
-        get HTTP header's value given its name
+        get the HTTP header's value given its name
 
         :param request:
         :param header_name: name of header
@@ -51,7 +51,7 @@ class RequestReader(object):
 
     def get_protocol(self, request):
         """
-        We assume that the request is a valid request object.
+        We assume that request is a valid request object.
         Gets the request protocol (e.g. HTTP/1.1).
 
         :return: The request protocol or None if it cannot be determined
@@ -90,7 +90,7 @@ class RequestReader(object):
     def get_remote_ip(self, request):
         """
         We assume that request is a valid request object.
-        Gets the remote ip of the request initiator.
+        Gets the remote IP of the request initiator.
 
         :return: An ip address or None if it cannot be determined
         """

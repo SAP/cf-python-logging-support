@@ -21,7 +21,7 @@ FLASK_FRAMEWORK_NAME = 'flask.framework'
 
 
 def before_request(wrapped):
-    """ Use as decorator on Flask before_request handler
+    """ Use as a decorator on Flask before_request handler
     Handles correlation_id by setting it in the context for log records
     """
     @wraps(wrapped)
@@ -35,7 +35,7 @@ def before_request(wrapped):
 
 
 def after_request(wrapped):
-    """ Use as decorator on Flask after_request handler
+    """ Use as a decorator on Flask after_request handler
     Creates info log record per request
     """
     @wraps(wrapped)
@@ -52,7 +52,7 @@ def init(app, level=defaults.DEFAULT_LOGGING_LEVEL):
     """ Initializes logging in JSON format.
 
     Adds before and after request handlers to `app` object to enable request info log.
-    :param app: - flask application object
+    :param app: - Flask application object
     :param level: - valid log level from standard logging package (optional)
     """
     if not isinstance(app, flask.Flask):

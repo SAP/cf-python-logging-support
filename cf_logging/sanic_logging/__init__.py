@@ -19,7 +19,7 @@ from cf_logging.sanic_logging.response_reader import SanicResponseReader
 SANIC_FRAMEWORK_NAME = 'sanic.framework'
 
 def before_request(wrapped):
-    """ Use as decorator on Sanic before_request handler
+    """ Use as decorator on Sanic's before_request handler
     Handles correlation_id by setting it in the context for log records
     """
     @wraps(wrapped)
@@ -45,8 +45,8 @@ def after_request(wrapped):
 def init(app, level=defaults.DEFAULT_LOGGING_LEVEL, custom_framework=None):
     """ Initializes logging in JSON format.
 
-    Adds before and after request handlers to `app` object to enable request info log.
-    :param app: - flask application object
+    Adds before and after request handlers to the `app` object to enable request info log.
+    :param app: - Flask application object
     :param level: - valid log level from standard logging package (optional)
     :param custom_framework: - `Framework` instance - use in case you need
         to change request processing behaviour for example to customize context storage

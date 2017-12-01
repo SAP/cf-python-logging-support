@@ -28,7 +28,7 @@ class Framework(object):
 
     @property
     def context(self):
-        """ Get context """
+        """ Get Context """
         return self._context
 
     @property
