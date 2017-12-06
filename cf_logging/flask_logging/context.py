@@ -1,6 +1,7 @@
 """ Flask logging context - used by the logging package to keep
-request specific data while request processing for logging purposes.
-For example correlation_id needs to be stored so all log entries contain it.
+request specific data, needed for logging purposes.
+For example correlation_id needs to be stored during request processing,
+so all log entries contain it.
 """
 from flask import g
 from cf_logging.core.context import Context

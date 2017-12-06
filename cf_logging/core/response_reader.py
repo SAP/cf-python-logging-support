@@ -1,7 +1,7 @@
 """ Module for the ResponseReader class """
 class ResponseReader(object):
     """
-        Helper class help to extract logging-relevant information from HTTP response object
+        Helper class for extracting logging-relevant information from HTTP response object
     """
 
     def get_status_code(self, response):

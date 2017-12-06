@@ -12,4 +12,4 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
  - Improved JSON logging
  - Simplified integration with Flask applications
  - Simplified integration with Sanic applications
- - Cleanup for open sourcing
+ - Cleanup for open-sourcing

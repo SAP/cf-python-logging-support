@@ -14,7 +14,7 @@ _SKIP_ATTRIBUTES = ["type", "written_at", "written_ts", "correlation_id", "remot
 
 
 class SimpleLogRecord(logging.LogRecord):
-    """ SimpleLogRecord class holds data for user logged message """
+    """ SimpleLogRecord class holds data for user logged messages """
     # pylint: disable=too-many-arguments,too-many-locals
 
     def __init__(self, extra, framework, *args, **kwargs):
@@ -38,7 +38,7 @@ class SimpleLogRecord(logging.LogRecord):
             setattr(self, key, value)
 
     def format_cf_attributes(self):
-        """ Add common plus CF environment specific attributes """
+        """ Add common and Cloud Foundry environment specific attributes """
         record = {
             'component_id': application_info.COMPONENT_ID,
             'component_name': application_info.COMPONENT_NAME,

@@ -36,7 +36,7 @@ class CfLogger(logging.Logger):
 
 
 def init(cfl_framework=None, level=defaults.DEFAULT_LOGGING_LEVEL):
-    """ Initialize function. It sets up the logging library to output json
+    """ Initialize function. It sets up the logging library to output JSON
         formatted messages.
 
         Optional arugments framework to use and logging.level

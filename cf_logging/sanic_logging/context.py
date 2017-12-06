@@ -1,5 +1,5 @@
 """ Sanic logging context - used by the logging package to keep
-request specific data while request processing for logging purposes.
+request specific data during request processing for logging purposes.
 For example correlation_id needs to be stored so all log entries contain it.
 """
 from cf_logging.core.context import Context
