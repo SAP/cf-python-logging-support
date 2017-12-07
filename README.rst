@@ -30,7 +30,7 @@ Install the package with pip:
 
 ::
 
-    pip install -e cf-python-logging-support git+https://github.com/SAP/cf-python-logging-support.git
+    pip install -e git+https://github.com/SAP/cf-python-logging-support.git#egg=sap_cf_logging
 
 Usage
 -----
