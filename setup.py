@@ -10,7 +10,7 @@ with open('./cf_logging/__init__.py', 'rb') as f:
     VERSION = str(ast.literal_eval(_VERSION_REGEX.search(f.read().decode('utf-8')).group(1)))
 
 setup(
-    name='cf-python-logging-support',
+    name='sap_cf_logging',
     version=VERSION,
     url='https://github.com/SAP/cf-python-logging-support',
     license='Apache License, Version 2.0',
