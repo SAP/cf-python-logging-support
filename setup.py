@@ -15,7 +15,7 @@ setup(
     url='https://github.com/SAP/cf-python-logging-support',
     license='Apache License, Version 2.0',
     author='SAP',
-    description='Cloud Foundry Python Logging Support',
+    description='Python logging library to emit JSON logs in a SAP CloudFoundry environment',
     long_description_content_type='text/x-rst',
     packages=find_packages(include=['cf_logging*']),
     include_package_data=True,

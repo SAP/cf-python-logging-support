@@ -9,7 +9,7 @@ from cf_logging.record.simple_log_record import SimpleLogRecord
 from cf_logging.core.framework import Framework
 from cf_logging.formatters.json_formatter import JsonFormatter
 
-__version__ = '3.0.0'
+__version__ = '3.0.1'
 
 _setup_done = False # pylint: disable=invalid-name
 framework = None # pylint: disable=invalid-name
