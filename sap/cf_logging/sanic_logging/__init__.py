@@ -7,13 +7,13 @@ from datetime import datetime
 from functools import wraps
 from sanic import Sanic
 
-import cf_logging
-from cf_logging import defaults
-from cf_logging.core.constants import REQUEST_KEY, RESPONSE_KEY
-from cf_logging.core.framework import Framework
-from cf_logging.sanic_logging.context import SanicContext
-from cf_logging.sanic_logging.request_reader import SanicRequestReader
-from cf_logging.sanic_logging.response_reader import SanicResponseReader
+from sap import cf_logging
+from sap.cf_logging import defaults
+from sap.cf_logging.core.constants import REQUEST_KEY, RESPONSE_KEY
+from sap.cf_logging.core.framework import Framework
+from sap.cf_logging.sanic_logging.context import SanicContext
+from sap.cf_logging.sanic_logging.request_reader import SanicRequestReader
+from sap.cf_logging.sanic_logging.response_reader import SanicResponseReader
 
 
 SANIC_FRAMEWORK_NAME = 'sanic.framework'

@@ -1,6 +1,6 @@
 """ Flask request reader """
-from cf_logging import defaults
-from cf_logging.core.request_reader import RequestReader
+from sap.cf_logging import defaults
+from sap.cf_logging.core.request_reader import RequestReader
 
 
 class FlaskRequestReader(RequestReader):

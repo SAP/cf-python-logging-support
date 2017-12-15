@@ -1,9 +1,9 @@
 """ Module SimpleLogRecord """
 import logging
 from datetime import datetime
-from cf_logging.core.constants import REQUEST_KEY, RESPONSE_KEY
-from cf_logging.record import application_info
-from cf_logging.record import util
+from sap.cf_logging.core.constants import REQUEST_KEY, RESPONSE_KEY
+from sap.cf_logging.record import application_info
+from sap.cf_logging.record import util
 
 
 _SKIP_ATTRIBUTES = ["type", "written_at", "written_ts", "correlation_id", "remote_user", "referer",

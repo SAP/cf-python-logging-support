@@ -1,8 +1,8 @@
 """ Module that holds the RequestWebRecord class """
-from cf_logging import defaults
-from cf_logging.core.constants import REQUEST_KEY, RESPONSE_KEY
-from cf_logging.record import util
-from cf_logging.record.simple_log_record import SimpleLogRecord
+from sap.cf_logging import defaults
+from sap.cf_logging.core.constants import REQUEST_KEY, RESPONSE_KEY
+from sap.cf_logging.record import util
+from sap.cf_logging.record.simple_log_record import SimpleLogRecord
 
 
 PROPS = ['type', 'direction', 'remote_user', 'request', 'referer',

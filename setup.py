@@ -6,7 +6,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 _VERSION_REGEX = re.compile(r'__version__\s+=\s+(.*)')
-with open('./cf_logging/__init__.py', 'rb') as f:
+with open('./sap/cf_logging/__init__.py', 'rb') as f:
     VERSION = str(ast.literal_eval(_VERSION_REGEX.search(f.read().decode('utf-8')).group(1)))
 
 setup(
@@ -17,7 +17,7 @@ setup(
     author='SAP',
     description='Python logging library to emit JSON logs in a SAP CloudFoundry environment',
     long_description_content_type='text/x-rst',
-    packages=find_packages(include=['cf_logging*']),
+    packages=find_packages(include=['sap*']),
     include_package_data=True,
     zip_safe=False,
     platforms='any',

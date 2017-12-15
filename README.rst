@@ -65,7 +65,8 @@ First import the ``cf_logging`` library and setup Flask logging on the applicati
 
 .. code:: python
 
-    from cf_logging import flask_logging
+    from sap.cf_logging import flask_logging
+
     app = flask.Flask(__name__)
     flask_logging.init(app, logging.INFO)
 
@@ -89,10 +90,10 @@ Sanic
 
     import sanic
     import logging
-    from cf_logging import sanic_logging
-    from sanic.response import HTTPResponse
-    from cf_logging.core.constants import REQUEST_KEY,
 
+    from sanic.response import HTTPResponse
+    from sap.cf_logging import sanic_logging
+    from sap.cf_logging.core.constants import REQUEST_KEY,
 
     app = sanic.Sanic('test.cf_logging')
     sanic_logging.init(app)
@@ -112,8 +113,8 @@ General
 
 .. code:: python
 
-    import cf_logging
     import logging
+    from sap import cf_logging
 
     cf_logging.init()
 

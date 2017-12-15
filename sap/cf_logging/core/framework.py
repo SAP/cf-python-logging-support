@@ -1,8 +1,8 @@
 """ Module framework """
 import sys
-from cf_logging.core.context import Context
-from cf_logging.core.request_reader import RequestReader
-from cf_logging.core.response_reader import ResponseReader
+from sap.cf_logging.core.context import Context
+from sap.cf_logging.core.request_reader import RequestReader
+from sap.cf_logging.core.response_reader import ResponseReader
 
 if sys.version_info[0] == 3:
     _STRClass = str

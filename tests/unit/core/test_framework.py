@@ -1,9 +1,9 @@
 """ Tests `core.framework` """
 import pytest
-from cf_logging.core.context import Context
-from cf_logging.core.request_reader import RequestReader
-from cf_logging.core.response_reader import ResponseReader
-from cf_logging.core.framework import Framework
+from sap.cf_logging.core.context import Context
+from sap.cf_logging.core.request_reader import RequestReader
+from sap.cf_logging.core.response_reader import ResponseReader
+from sap.cf_logging.core.framework import Framework
 
 # pylint: disable=abstract-method,  abstract-method, missing-docstring, invalid-name
 

@@ -3,9 +3,9 @@ import logging
 import pytest
 import sanic
 from sanic.response import text
-import cf_logging
+from sap import cf_logging
 
-from cf_logging import sanic_logging
+from sap.cf_logging import sanic_logging
 from tests.log_schemas import WEB_LOG_SCHEMA, CLI_LOG_SCHEMA
 from tests.common_test_params import v_str, v_num, get_web_record_header_fixtures
 from tests.schema_util import extend
