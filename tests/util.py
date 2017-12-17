@@ -3,7 +3,7 @@ import io
 import logging
 import json
 from json_validator.validator import JsonValidator
-from cf_logging.formatters.json_formatter import JsonFormatter
+from sap.cf_logging.formatters.json_formatter import JsonFormatter
 from tests.schema_util import extend
 
 

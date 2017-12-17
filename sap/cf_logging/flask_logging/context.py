@@ -4,7 +4,7 @@ For example correlation_id needs to be stored during request processing,
 so all log entries contain it.
 """
 from flask import g
-from cf_logging.core.context import Context
+from sap.cf_logging.core.context import Context
 
 
 class FlaskContext(Context):

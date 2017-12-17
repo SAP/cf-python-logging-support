@@ -1,8 +1,8 @@
 """ Tests `record.util` package """
 from datetime import datetime
 
-from cf_logging.defaults import UNIX_EPOCH
-from cf_logging.record import util
+from sap.cf_logging.defaults import UNIX_EPOCH
+from sap.cf_logging.record import util
 
 
 def test_parse_int_default():

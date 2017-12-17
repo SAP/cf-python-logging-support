@@ -2,7 +2,7 @@
 request specific data during request processing for logging purposes.
 For example correlation_id needs to be stored so all log entries contain it.
 """
-from cf_logging.core.context import Context
+from sap.cf_logging.core.context import Context
 
 
 CONTEXT_NAME = 'cf_logger_context'

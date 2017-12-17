@@ -1,8 +1,8 @@
 """ Module for record constants """
 import os
 
-from cf_logging import defaults
-from cf_logging.record import util
+from sap.cf_logging import defaults
+from sap.cf_logging.record import util
 
 
 LAYER = 'python'

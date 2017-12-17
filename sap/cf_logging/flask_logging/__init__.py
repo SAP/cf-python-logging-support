@@ -9,13 +9,13 @@ from functools import wraps
 import flask
 from flask import request
 
-import cf_logging
-from cf_logging import defaults
-from cf_logging.core.constants import REQUEST_KEY, RESPONSE_KEY
-from cf_logging.core.framework import Framework
-from cf_logging.flask_logging.context import FlaskContext
-from cf_logging.flask_logging.request_reader import FlaskRequestReader
-from cf_logging.flask_logging.response_reader import FlaskResponseReader
+from sap import cf_logging
+from sap.cf_logging import defaults
+from sap.cf_logging.core.constants import REQUEST_KEY, RESPONSE_KEY
+from sap.cf_logging.core.framework import Framework
+from sap.cf_logging.flask_logging.context import FlaskContext
+from sap.cf_logging.flask_logging.request_reader import FlaskRequestReader
+from sap.cf_logging.flask_logging.response_reader import FlaskResponseReader
 
 FLASK_FRAMEWORK_NAME = 'flask.framework'
 

@@ -1,13 +1,11 @@
 """ Module that tests the integration of cf_logging with Flask """
 import logging
 import pytest
-import cf_logging
-
-from cf_logging import flask_logging
 from flask import Flask
 from flask import Response
+from sap import cf_logging
+from sap.cf_logging import flask_logging
 from tests.log_schemas import WEB_LOG_SCHEMA, CLI_LOG_SCHEMA
-from tests.schema_util import extend
 from tests.common_test_params import v_str, v_num, auth_basic, get_web_record_header_fixtures
 from tests.util import check_log_record, config_root_logger
 

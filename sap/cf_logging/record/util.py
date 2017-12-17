@@ -2,7 +2,7 @@
 import json
 import os
 
-from cf_logging.defaults import UNIX_EPOCH
+from sap.cf_logging.defaults import UNIX_EPOCH
 
 
 VCAP_APPLICATION = json.loads(os.getenv('VCAP_APPLICATION', default='{}'))
