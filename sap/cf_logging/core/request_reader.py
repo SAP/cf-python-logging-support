@@ -1,14 +1,15 @@
 """ request_reader provides an interface for the RequestReader class """
 import uuid
 
-
 CORRELATION_ID_HEADERS = ['X-Correlation-ID',
                           'X-CorrelationID', 'X-Request-ID', 'X-Vcap-Request-Id']
+
 
 class RequestReader(object):
     """
         Helper class for extracting logging-relevant information from HTTP request object
     """
+
     def get_correlation_id(self, request):
         """
         We assume that the request is a valid request object.
@@ -40,7 +41,6 @@ class RequestReader(object):
         if header_name in request.headers:
             return request.headers.get(header_name)
         return default
-
 
     def get_remote_user(self, request):
         """

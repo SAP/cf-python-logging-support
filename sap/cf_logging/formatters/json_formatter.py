@@ -10,6 +10,7 @@ else:
     def _encode(obj):
         return unicode(json.dumps(obj))  # pylint: disable=undefined-variable
 
+
 class JsonFormatter(logging.Formatter):
     """
     Formatter for non-web application log

@@ -1,5 +1,5 @@
 """ Sanic response reader """
-from  cf_logging.core.response_reader import ResponseReader
+from cf_logging.core.response_reader import ResponseReader
 
 CONTENT_LENGTH = 'Content-Length'
 

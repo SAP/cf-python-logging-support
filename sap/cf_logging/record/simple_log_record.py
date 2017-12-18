@@ -5,7 +5,6 @@ from sap.cf_logging.core.constants import REQUEST_KEY, RESPONSE_KEY
 from sap.cf_logging.record import application_info
 from sap.cf_logging.record import util
 
-
 _SKIP_ATTRIBUTES = ["type", "written_at", "written_ts", "correlation_id", "remote_user", "referer",
                     "x_forwarded_for", "protocol", "method", "remote_ip", "request_size_b",
                     "remote_host", "remote_port", "request_received_at", "direction",
@@ -15,6 +14,7 @@ _SKIP_ATTRIBUTES = ["type", "written_at", "written_ts", "correlation_id", "remot
 
 class SimpleLogRecord(logging.LogRecord):
     """ SimpleLogRecord class holds data for user logged messages """
+
     # pylint: disable=too-many-arguments,too-many-locals
 
     def __init__(self, extra, framework, *args, **kwargs):
@@ -32,8 +32,8 @@ class SimpleLogRecord(logging.LogRecord):
 
         self.correlation_id = correlation_id or '-'
 
-        self.extra = dict((key, value) for key, value in extra.items() \
-            if key not in _SKIP_ATTRIBUTES) if extra else {}
+        self.extra = dict((key, value) for key, value in extra.items()
+                          if key not in _SKIP_ATTRIBUTES) if extra else {}
         for key, value in self.extra.items():
             setattr(self, key, value)
 

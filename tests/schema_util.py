@@ -19,6 +19,7 @@ def num(val=None):
         'lt': val + 1
     }
 
+
 def pos_num():
     """ Return validation schema for positive numbers """
     return {
@@ -27,12 +28,14 @@ def pos_num():
         'gt_error': 'Not a positive number'
     }
 
+
 def string(regex):
     """ Return validation schema for strings """
     return {
         'format': regex,
         'format_error': 'Incorrect {value} string value'
     }
+
 
 def enum(lst):
     """ Return validation schema for lists """
@@ -41,12 +44,14 @@ def enum(lst):
         'in_error': 'Value not in list of expected values'
     }
 
+
 def iso_datetime():
     """ Return validation schema for datetime """
     return {
         'format': r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z',
         'format_error': 'Invalid date format'
     }
+
 
 def extend(dict1, dict2):
     """ Extend dict1 with dict2 """
