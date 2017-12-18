@@ -39,7 +39,7 @@ def init(cfl_framework=None, level=defaults.DEFAULT_LOGGING_LEVEL):
     """ Initialize function. It sets up the logging library to output JSON
         formatted messages.
 
-        Optional arugments framework to use and logging.level
+        Optional arguments framework to use and logging.level
     """
     global framework # pylint: disable=global-statement,invalid-name
     global _setup_done # pylint: disable=global-statement,invalid-name
