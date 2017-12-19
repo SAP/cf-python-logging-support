@@ -4,8 +4,9 @@ For example correlation_id needs to be stored so all log entries contain it.
 """
 from sap.cf_logging.core.context import Context
 
-
 CONTEXT_NAME = 'cf_logger_context'
+
+
 def _init_context(request):
     if CONTEXT_NAME not in request:
         request[CONTEXT_NAME] = {}

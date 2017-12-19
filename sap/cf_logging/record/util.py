@@ -4,8 +4,8 @@ import os
 
 from sap.cf_logging.defaults import UNIX_EPOCH
 
-
 VCAP_APPLICATION = json.loads(os.getenv('VCAP_APPLICATION', default='{}'))
+
 
 def get_vcap_param(param_name, default=None):
     """
@@ -17,9 +17,11 @@ def get_vcap_param(param_name, default=None):
     """
     return VCAP_APPLICATION.get(param_name, default)
 
+
 def epoch_nano_second(datetime_):
     """ Returns the nanoseconds since epoch time """
     return int((datetime_ - UNIX_EPOCH).total_seconds()) * 1000000000 + datetime_.microsecond * 1000
+
 
 def iso_time_format(datetime_):
     """ Returns ISO time formatted string """
@@ -27,11 +29,13 @@ def iso_time_format(datetime_):
         datetime_.year, datetime_.month, datetime_.day, datetime_.hour,
         datetime_.minute, datetime_.second, int(datetime_.microsecond / 1000))
 
+
 def time_delta_ms(start, end):
     """ Returns the delta time between to datetime objects """
     time_delta = end - start
     return int(time_delta.total_seconds()) * 1000 + \
            int(time_delta.microseconds / 1000)
+
 
 def parse_int(_int, default):
     """ Parses an int and returns the result
@@ -39,6 +43,6 @@ def parse_int(_int, default):
     """
     try:
         integer = int(_int)
-    except: # pylint: disable-msg=bare-except
+    except:  # pylint: disable-msg=bare-except
         integer = default
     return integer

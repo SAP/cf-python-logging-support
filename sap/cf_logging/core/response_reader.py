@@ -1,4 +1,6 @@
 """ Module for the ResponseReader class """
+
+
 class ResponseReader(object):
     """
         Helper class for extracting logging-relevant information from HTTP response object

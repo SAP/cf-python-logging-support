@@ -6,6 +6,7 @@ from json_validator.validator import JsonValidator
 from tests.log_schemas import CLI_LOG_SCHEMA
 from tests.util import config_root_logger
 
+
 # pylint: disable=protected-access
 
 def test_critical():

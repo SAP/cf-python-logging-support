@@ -3,7 +3,6 @@
 - Produces info request log entry per request
 """
 import logging
-import sys
 from datetime import datetime
 from functools import wraps
 import flask

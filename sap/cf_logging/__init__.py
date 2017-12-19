@@ -11,8 +11,8 @@ from sap.cf_logging.formatters.json_formatter import JsonFormatter
 
 __version__ = '3.0.1'
 
-_setup_done = False # pylint: disable=invalid-name
-framework = None # pylint: disable=invalid-name
+_setup_done = False  # pylint: disable=invalid-name
+framework = None  # pylint: disable=invalid-name
 
 
 class CfLogger(logging.Logger):
@@ -24,7 +24,7 @@ class CfLogger(logging.Logger):
     def makeRecord(self, name, level, fn, lno, msg, args, exc_info,
                    func=None, extra=None, *_args, **_kwargs):
         """ Returns SimpleLogMessage or a RequestWebRecord depending on the extra variable """
-        #check what record type this is
+        # check what record type this is
         cls = None
         if extra is not None and REQUEST_KEY in extra and RESPONSE_KEY in extra:
             cls = RequestWebRecord
@@ -39,10 +39,10 @@ def init(cfl_framework=None, level=defaults.DEFAULT_LOGGING_LEVEL):
     """ Initialize function. It sets up the logging library to output JSON
         formatted messages.
 
-        Optional arugments framework to use and logging.level
+        Optional arguments framework to use and logging.level
     """
-    global framework # pylint: disable=global-statement,invalid-name
-    global _setup_done # pylint: disable=global-statement,invalid-name
+    global framework  # pylint: disable=global-statement,invalid-name
+    global _setup_done  # pylint: disable=global-statement,invalid-name
     if _setup_done:
         raise RuntimeError('cf_logging already initialized')
 
