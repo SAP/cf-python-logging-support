@@ -6,7 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 
-## [Unreleased]
+## 3.1.0 - 2018-01-04
  - Introduced sap namespace
 
 ## 3.0.1 - 2017-12-11
