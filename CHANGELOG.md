@@ -5,8 +5,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## 3.1.1 - 2018-03-06
+
+### Fixed
+ - Fix missing sap namespace in response readers
 
 ## 3.1.0 - 2018-01-04
+
+### Changed
  - Introduced sap namespace
 
 ## 3.0.1 - 2017-12-11
