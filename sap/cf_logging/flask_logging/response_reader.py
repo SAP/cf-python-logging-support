@@ -1,5 +1,5 @@
 """ Flask response reader """
-from cf_logging.core.response_reader import ResponseReader
+from sap.cf_logging.core.response_reader import ResponseReader
 
 
 class FlaskResponseReader(ResponseReader):
