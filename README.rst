@@ -93,7 +93,7 @@ Sanic
 
     from sanic.response import HTTPResponse
     from sap.cf_logging import sanic_logging
-    from sap.cf_logging.core.constants import REQUEST_KEY,
+    from sap.cf_logging.core.constants import REQUEST_KEY
 
     app = sanic.Sanic('test.cf_logging')
     sanic_logging.init(app)
@@ -107,6 +107,31 @@ Sanic
 **Note**: With Sanic you need to pass the request with an ``extra`` parameter in the logging API.
 This is needed in order to get the *correlation_id* generated at the beginning of the request or
 fetched from the HTTP headers.
+
+Falcon
+^^^^^^
+
+.. code:: python
+
+
+   import falcon
+   from sap.cf_logging import falcon_logging
+
+
+   class Resource:
+       def on_get(self, req, resp):
+           # Use the log() method of the req object to log additional messages
+           req.log('Resource requested')
+           resp.media = {'name': 'Cloud Foundry'}
+
+
+   app = falcon.API(middleware=[
+       falcon_logging.LoggingMiddleware()
+   ])
+   app.add_route('/resource', Resource())
+   falcon_logging.init(app)
+
+**Note**: Use the ``log`` method of ``req`` since it will include the ``correlation_id`` from the ``req`` object in the logs.
 
 General
 ^^^^^^^
