@@ -1,4 +1,5 @@
 asyncio
+falcon
 Flask
 sanic; python_version >= '3.5'
 aiohttp; python_version >= '3.5'
