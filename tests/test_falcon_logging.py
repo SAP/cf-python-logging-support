@@ -21,7 +21,7 @@ def test_falcon_requires_valid_app():
 
 
 FIXTURE = get_web_record_header_fixtures()
-FIXTURE.append(({'Authorization': auth_basic('user', 'pass')},
+FIXTURE.append(({'Authorization': str(auth_basic('user', 'pass'))},
                 {'remote_user': v_str('user')}))
 
 
