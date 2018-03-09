@@ -78,7 +78,6 @@ class TestUserResource:
     def on_get(self, req, resp):
         _, stream = config_root_logger('user.logging')
         req.log('in route headers', extra=self.extra)
-        # logger.info('in route headers', extra=self.extra)
         assert check_log_record(stream, CLI_LOG_SCHEMA, self.expected) == {}
 
         resp.set_header('Content-Type', 'text/plain')
