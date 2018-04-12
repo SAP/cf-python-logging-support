@@ -12,6 +12,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+.env
 env/
 env3/
 venv/
@@ -25,6 +26,7 @@ lib/
 dist/
 lib64/
 parts/
+.pytest_cache/
 sdist/
 var/
 *.egg-info/
