@@ -17,7 +17,7 @@ class SanicContext(Context):
 
     def set(self, key, value, request):
         if request is None:
-            return None
+            return
         _init_context(request)
         request[CONTEXT_NAME][key] = value
 

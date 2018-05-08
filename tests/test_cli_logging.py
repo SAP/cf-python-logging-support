@@ -1,8 +1,8 @@
 """ Module to test the cf_logging library """
 import logging
 from json import JSONDecoder
-from sap import cf_logging
 from json_validator.validator import JsonValidator
+from sap import cf_logging
 from tests.log_schemas import CLI_LOG_SCHEMA
 from tests.util import config_root_logger
 
