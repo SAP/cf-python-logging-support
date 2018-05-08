@@ -14,4 +14,4 @@ class FalconContext(Context):
         request.context[key] = value
 
     def get(self, key, request):
-        return request.context.get(key)
+        return request.context.get(key) if request else None

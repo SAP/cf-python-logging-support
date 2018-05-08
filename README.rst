@@ -18,8 +18,13 @@ Features
 3. Emits JSON logs (`format
    details <https://github.com/SAP/cf-java-logging-support/tree/master/cf-java-logging-support-core/beats>`__).
 4. Supports **correlation-id**.
-5. Supports request instrumentation. Built in support for `Flask 0.1x <http://flask.pocoo.org/>`__ &
-   `Sanic 0.5.x <https://github.com/channelcat/sanic>`__. Extensible to support others.
+5. Supports request instrumentation. Built in support for:
+
+  * `Flask 0.1x <http://flask.pocoo.org/>`__
+  * `Sanic 0.5.x <https://github.com/channelcat/sanic>`__
+  * `Falcon <https://falconframework.org/>`__
+  * Extensible to support others
+
 6. Includes CF-specific information (space id, app id, etc.) to logs.
 7. Supports adding extra properties to JSON log object.
 

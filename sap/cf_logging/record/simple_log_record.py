@@ -27,7 +27,7 @@ class SimpleLogRecord(logging.LogRecord):
         request = extra[REQUEST_KEY] if extra and REQUEST_KEY in extra else None
 
         correlation_id = None
-        if framework is not None:
+        if framework:
             correlation_id = framework.context.get('correlation_id', request)
 
         self.correlation_id = correlation_id or '-'

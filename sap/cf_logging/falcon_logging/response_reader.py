@@ -5,6 +5,8 @@ CONTENT_LENGTH = 'Content-Length'
 
 
 class FalconResponseReader(ResponseReader):
+    """ Read log related properties out of falcon response """
+
     def get_status_code(self, response):
         return response.status.split(' ', 1)[0]
 
