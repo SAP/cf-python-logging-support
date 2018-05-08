@@ -20,9 +20,9 @@ class CfLogger(logging.Logger):
         log messages
     """
 
-    # pylint: disable=too-many-arguments,arguments-differ
-    def makeRecord(self, name, level, fn, lno, msg, args, exc_info,
-                   func=None, extra=None, *_args, **_kwargs):
+    # pylint: disable=too-many-arguments,arguments-differ,keyword-arg-before-vararg
+    def makeRecord(self, name, level, fn, lno, msg, msgargs, exc_info,
+                   func=None, extra=None, *args, **kwargs):
         """ Returns SimpleLogMessage or a RequestWebRecord depending on the extra variable """
         # check what record type this is
         cls = None
@@ -31,8 +31,8 @@ class CfLogger(logging.Logger):
         else:
             cls = SimpleLogRecord
 
-        return cls(extra, framework, name, level, fn, lno, msg, args, exc_info,
-                   func, *_args, **_kwargs)
+        return cls(extra, framework, name, level, fn, lno, msg, msgargs, exc_info,
+                   func, *args, **kwargs)
 
 
 def init(cfl_framework=None, level=defaults.DEFAULT_LOGGING_LEVEL):

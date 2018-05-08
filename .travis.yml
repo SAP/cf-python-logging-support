@@ -5,5 +5,5 @@ python:
   - "3.6"
 install:
   - pip install -r test-requirements.txt
-script:
-  - py.test -v
+  - pip install tox-travis
+script: tox
