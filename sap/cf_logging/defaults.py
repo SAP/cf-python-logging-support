@@ -5,6 +5,7 @@ from datetime import datetime
 
 
 UNKNOWN = '-'
+REDACTED = 'redacted'
 RESPONSE_SIZE_B = -1
 RESPONSE_TIME_MS = 0
 REQUEST_SIZE_B = -1

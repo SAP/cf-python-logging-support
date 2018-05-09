@@ -7,7 +7,7 @@ from sap import cf_logging
 from sap.cf_logging import flask_logging
 from tests.log_schemas import WEB_LOG_SCHEMA, CLI_LOG_SCHEMA
 from tests.common_test_params import v_str, v_num, auth_basic, get_web_record_header_fixtures
-from tests.util import check_log_record, config_root_logger
+from tests.util import check_log_record, config_root_logger, enable_sensitive_fields_logging
 
 
 # pylint: disable=protected-access
@@ -24,9 +24,17 @@ FIXTURE.append(({'Authorization': auth_basic('user', 'pass')},
 FIXTURE.append(({}, {'response_size_b': v_num(val=2)}))
 
 
+@pytest.yield_fixture(autouse=True)
+def before_each():
+    """ enable all fields to be logged """
+    enable_sensitive_fields_logging()
+    yield
+
+
 @pytest.mark.parametrize("headers, expected", FIXTURE)
 def test_flask_request_log(headers, expected):
     """ That the expected records are logged by the logging library """
+
     app = Flask(__name__)
 
     @app.route('/test/path')

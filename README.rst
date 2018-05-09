@@ -125,6 +125,25 @@ General
 be left untouched. - When using Flask and Sanic with the logging library a before and
 after request middleware is attached, and it will capture response times for each request.
 
+Logging sensitive data
+^^^^^^^^^^^^^^^^^^^^^^
+
+The logging library does not log sensitive fields by default. Those fields are replaced with 'redacted' instead of their original content.
+The following fields are considered sensitive data: ``remote_ip``, ``remote_host``, ``remote_port``, ``x_forwarded_for``, ``remote_user``, ``referer``.
+Logging of all or some of these fields can be activated by setting the following environment variables:
+
++-----------------------------------+-----------+------------------------------------------------------------------------+
+| Environment variable              | Value     | Enables sensitive field                                                |
++===================================+===========+========================================================================+
+| ``LOG_SENSITIVE_CONNECTION_DATA`` | true      |   ``remote_ip``, ``remote_host``, ``remote_port``, ``x_forwarded_for`` |
++-----------------------------------+-----------+------------------------------------------------------------------------+
+| ``LOG_REMOTE_USER``               | true      |   ``remote_user``                                                      |
++-----------------------------------+-----------+------------------------------------------------------------------------+
+| ``LOG_REFERER``                   | true      |   ``referer``                                                          |
++-----------------------------------+-----------+------------------------------------------------------------------------+
+
+This behavior matches the corresponding mechanism in the `CF Java Logging Support library <https://github.com/SAP/cf-java-logging-support/wiki/Overview#logging-sensitive-user-data>`__.
+
 Examples
 ~~~~~~~~
 
