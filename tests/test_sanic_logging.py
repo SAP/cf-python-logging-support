@@ -68,7 +68,7 @@ def test_logs_correlation_id():
 
 # Helper functions
 def _set_up_sanic_logging(app, level=logging.DEBUG):
-    cf_logging._setup_done = False
+    cf_logging._SETUP_DONE = False
     sanic_logging.init(app, level)
 
 

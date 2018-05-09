@@ -18,5 +18,5 @@ class SanicRequestReader(RequestReader):
     def get_remote_ip(self, request):
         return request.ip[0]
 
-    def get_remote_port(self, request):  # pylint: disable=unused-argument
+    def get_remote_port(self, request):
         return None

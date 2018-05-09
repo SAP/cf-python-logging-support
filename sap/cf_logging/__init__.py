@@ -11,8 +11,8 @@ from sap.cf_logging.formatters.json_formatter import JsonFormatter
 
 __version__ = '3.1.1'
 
-_setup_done = False  # pylint: disable=invalid-name
-framework = None  # pylint: disable=invalid-name
+_SETUP_DONE = False
+FRAMEWORK = None
 
 
 class CfLogger(logging.Logger):
@@ -31,7 +31,7 @@ class CfLogger(logging.Logger):
         else:
             cls = SimpleLogRecord
 
-        return cls(extra, framework, name, level, fn, lno, msg, msgargs, exc_info,
+        return cls(extra, FRAMEWORK, name, level, fn, lno, msg, msgargs, exc_info,
                    func, *args, **kwargs)
 
 
@@ -41,16 +41,16 @@ def init(cfl_framework=None, level=defaults.DEFAULT_LOGGING_LEVEL):
 
         Optional arguments framework to use and logging.level
     """
-    global framework  # pylint: disable=global-statement,invalid-name
-    global _setup_done  # pylint: disable=global-statement,invalid-name
-    if _setup_done:
+    global FRAMEWORK  # pylint: disable=global-statement
+    global _SETUP_DONE  # pylint: disable=global-statement
+    if _SETUP_DONE:
         raise RuntimeError('cf_logging already initialized')
 
     if cfl_framework is not None and not isinstance(cfl_framework, Framework):
         raise TypeError('expecting framework of type {}'.format(Framework.__name__))
 
-    _setup_done = True
-    framework = cfl_framework
+    _SETUP_DONE = True
+    FRAMEWORK = cfl_framework
 
     logging.setLoggerClass(CfLogger)
 

@@ -4,10 +4,8 @@ from sap.cf_logging.core.context import Context
 from sap.cf_logging.core.request_reader import RequestReader
 from sap.cf_logging.core.response_reader import ResponseReader
 
-if sys.version_info[0] == 3:
-    _STRClass = str
-else:
-    _STRClass = basestring  # pylint: disable=undefined-variable,invalid-name
+
+STR_CLASS = str if sys.version_info[0] == 3 else basestring # pylint: disable=undefined-variable
 
 
 def _check_instance(obj, clazz):
@@ -19,7 +17,7 @@ class Framework(object):
     """ Framework class holds Context, RequestReader, ResponseReader """
 
     def __init__(self, name, context, request_reader, response_reader):
-        if not name or not isinstance(name, _STRClass):
+        if not name or not isinstance(name, STR_CLASS):
             raise TypeError('Provided name is not valid string')
         _check_instance(context, Context)
         _check_instance(request_reader, RequestReader)
