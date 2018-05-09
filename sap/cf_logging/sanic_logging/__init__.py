@@ -25,9 +25,9 @@ def before_request(wrapped):
 
     @wraps(wrapped)
     def _wrapper(request):
-        correlation_id = cf_logging.framework.request_reader.get_correlation_id(request)
-        cf_logging.framework.context.set('correlation_id', correlation_id, request)
-        cf_logging.framework.context.set('request_started_at', datetime.utcnow(), request)
+        correlation_id = cf_logging.FRAMEWORK.request_reader.get_correlation_id(request)
+        cf_logging.FRAMEWORK.context.set('correlation_id', correlation_id, request)
+        cf_logging.FRAMEWORK.context.set('request_started_at', datetime.utcnow(), request)
         return wrapped(request)
 
     return _wrapper
@@ -40,7 +40,7 @@ def after_request(wrapped):
 
     @wraps(wrapped)
     def _wrapper(request, response):
-        cf_logging.framework.context.set('response_sent_at', datetime.utcnow(), request)
+        cf_logging.FRAMEWORK.context.set('response_sent_at', datetime.utcnow(), request)
         extra = {REQUEST_KEY: request, RESPONSE_KEY: response}
         logging.getLogger('cf.sanic.logger').info('', extra=extra)
         return wrapped(request, response)

@@ -17,6 +17,6 @@ def test_critical():
     log_json = JSONDecoder().decode(stream.getvalue())
     _, error = JsonValidator(CLI_LOG_SCHEMA).validate(log_json)
 
-    cf_logging._setup_done = False
+    cf_logging._SETUP_DONE = False
 
     assert error == {}

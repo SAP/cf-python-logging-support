@@ -15,7 +15,7 @@ from sap.cf_logging.record.simple_log_record import SimpleLogRecord
 def test_init_called_twice(mocker):
     """ test cf_logging.init can be called only once """
     framework = mocker.Mock(Framework)
-    cf_logging._setup_done = False
+    cf_logging._SETUP_DONE = False
     cf_logging.init(framework, level=logging.DEBUG)
     cf_logging.init(framework, level=logging.DEBUG)
 
@@ -23,7 +23,7 @@ def test_init_called_twice(mocker):
 @pytest.mark.xfail(raises=TypeError, reason='', strict=True)
 def test_init_incorrect_framework():
     """ test cf_logging.init fails for invalid framework """
-    cf_logging._setup_done = False
+    cf_logging._SETUP_DONE = False
     cf_logging.init({})
 
 

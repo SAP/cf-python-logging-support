@@ -25,7 +25,7 @@ def before_request(wrapped):
     """
     @wraps(wrapped)
     def _wrapper():
-        framework = cf_logging.framework
+        framework = cf_logging.FRAMEWORK
         cid = framework.request_reader.get_correlation_id(request)
         framework.context.set('correlation_id', cid, request)
         framework.context.set('request_started_at', datetime.utcnow(), request)
@@ -39,7 +39,7 @@ def after_request(wrapped):
     """
     @wraps(wrapped)
     def _wrapper(response):
-        cf_logging.framework.context.set(
+        cf_logging.FRAMEWORK.context.set(
             'response_sent_at', datetime.utcnow(), request)
         extra = {REQUEST_KEY: request, RESPONSE_KEY: response}
         logging.getLogger('cf.flask.logger').info('', extra=extra)

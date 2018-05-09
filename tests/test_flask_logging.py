@@ -55,7 +55,7 @@ def test_correlation_id():
 
 # Helper functions
 def _set_up_flask_logging(app, level=logging.DEBUG):
-    cf_logging._setup_done = False
+    cf_logging._SETUP_DONE = False
     flask_logging.init(app, level)
 
 
