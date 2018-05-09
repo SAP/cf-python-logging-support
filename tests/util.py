@@ -2,8 +2,12 @@
 import io
 import logging
 import json
+import os
 from json_validator.validator import JsonValidator
 from sap.cf_logging.formatters.json_formatter import JsonFormatter
+from sap.cf_logging.core.constants import \
+    LOG_SENSITIVE_CONNECTION_DATA, LOG_REMOTE_USER, LOG_REFERER
+
 from tests.schema_util import extend
 
 
@@ -37,3 +41,9 @@ def config_logger(logger_name):
     logger = logging.getLogger(logger_name)
     logger.addHandler(stream_handler)
     return logger, stream
+
+def enable_sensitive_fields_logging():
+    """ sets a few logging related env vars """
+    os.environ[LOG_SENSITIVE_CONNECTION_DATA] = 'true'
+    os.environ[LOG_REMOTE_USER] = 'true'
+    os.environ[LOG_REFERER] = 'true'

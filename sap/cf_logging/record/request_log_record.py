@@ -1,6 +1,8 @@
 """ Module that holds the RequestWebRecord class """
+import os
 from sap.cf_logging import defaults
-from sap.cf_logging.core.constants import REQUEST_KEY, RESPONSE_KEY
+from sap.cf_logging.core.constants import REQUEST_KEY, RESPONSE_KEY, \
+    LOG_SENSITIVE_CONNECTION_DATA, LOG_REMOTE_USER, LOG_REFERER
 from sap.cf_logging.record import util
 from sap.cf_logging.record.simple_log_record import SimpleLogRecord
 
@@ -72,9 +74,24 @@ class RequestWebRecord(SimpleLogRecord):
             response_reader.get_response_size(response), defaults.RESPONSE_SIZE_B)
         self.response_content_type = response_reader.get_content_type(response)
 
+        self._hide_sensitive_fields()
+
     def format(self):
         record = super(RequestWebRecord, self).format_cf_attributes()
         request_properties = dict(
             (key, value) for key, value in self.__dict__.items() if key in PROPS)
         record.update(request_properties)
         return record
+
+    def _hide_sensitive_fields(self):
+        if os.environ.get(LOG_SENSITIVE_CONNECTION_DATA, 'false').lower() != 'true':
+            self.remote_ip = defaults.REDACTED
+            self.remote_host = defaults.REDACTED
+            self.remote_port = defaults.REDACTED
+            self.x_forwarded_for = defaults.REDACTED
+
+        if os.environ.get(LOG_REMOTE_USER, 'false').lower() != 'true':
+            self.remote_user = defaults.REDACTED
+
+        if os.environ.get(LOG_REFERER, 'false').lower() != 'true':
+            self.referer = defaults.REDACTED
