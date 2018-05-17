@@ -18,8 +18,13 @@ Features
 3. Emits JSON logs (`format
    details <https://github.com/SAP/cf-java-logging-support/tree/master/cf-java-logging-support-core/beats>`__).
 4. Supports **correlation-id**.
-5. Supports request instrumentation. Built in support for `Flask 0.1x <http://flask.pocoo.org/>`__ &
-   `Sanic 0.5.x <https://github.com/channelcat/sanic>`__. Extensible to support others.
+5. Supports request instrumentation. Built in support for:
+
+  * `Flask 0.1x <http://flask.pocoo.org/>`__
+  * `Sanic 0.5.x <https://github.com/channelcat/sanic>`__
+  * `Falcon <https://falconframework.org/>`__
+  * Extensible to support others
+
 6. Includes CF-specific information (space id, app id, etc.) to logs.
 7. Supports adding extra properties to JSON log object.
 
@@ -93,7 +98,7 @@ Sanic
 
     from sanic.response import HTTPResponse
     from sap.cf_logging import sanic_logging
-    from sap.cf_logging.core.constants import REQUEST_KEY,
+    from sap.cf_logging.core.constants import REQUEST_KEY
 
     app = sanic.Sanic('test.cf_logging')
     sanic_logging.init(app)
@@ -107,6 +112,31 @@ Sanic
 **Note**: With Sanic you need to pass the request with an ``extra`` parameter in the logging API.
 This is needed in order to get the *correlation_id* generated at the beginning of the request or
 fetched from the HTTP headers.
+
+Falcon
+^^^^^^
+
+.. code:: python
+
+
+   import falcon
+   from sap.cf_logging import falcon_logging
+
+
+   class Resource:
+       def on_get(self, req, resp):
+           # Use the log() method of the req object to log additional messages
+           req.log('Resource requested')
+           resp.media = {'name': 'Cloud Foundry'}
+
+
+   app = falcon.API(middleware=[
+       falcon_logging.LoggingMiddleware()
+   ])
+   app.add_route('/resource', Resource())
+   falcon_logging.init(app)
+
+**Note**: Use the ``log`` method of ``req`` since it will include the ``correlation_id`` from the ``req`` object in the logs.
 
 General
 ^^^^^^^

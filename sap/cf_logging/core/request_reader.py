@@ -40,6 +40,8 @@ class RequestReader(object):
 
         if header_name in request.headers:
             return request.headers.get(header_name)
+        if header_name.upper() in request.headers:
+            return request.headers.get(header_name.upper())
         return default
 
     def get_remote_user(self, request):

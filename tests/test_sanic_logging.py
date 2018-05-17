@@ -94,6 +94,8 @@ def _user_logging(headers, extra, expected, provide_request=False):
 
 
 def _check_expected_response(response, status_code=200, body=None):
+    print(response.text)
     assert response.status == status_code
+
     if body is not None:
         assert response.text == body
