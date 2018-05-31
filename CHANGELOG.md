@@ -7,6 +7,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## 3.2.0 - 2018-05-31
 
+### Added
+ - Support for Falcon web framework
+ 
 ### Changed
  - Hide sensitive fields by default
 
