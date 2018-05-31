@@ -9,7 +9,7 @@ from sap.cf_logging.record.simple_log_record import SimpleLogRecord
 from sap.cf_logging.core.framework import Framework
 from sap.cf_logging.formatters.json_formatter import JsonFormatter
 
-__version__ = '3.1.1'
+__version__ = '3.2.0'
 
 _SETUP_DONE = False
 FRAMEWORK = None

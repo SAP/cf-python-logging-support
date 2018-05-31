@@ -5,6 +5,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## 3.2.0 - 2018-05-31
+
+### Changed
+ - Hide sensitive fields by default
+
+### Fixed
+ - Do not apply JSON formatting on unknown LogRecord
+
 ## 3.1.1 - 2018-03-06
 
 ### Fixed
