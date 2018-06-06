@@ -27,7 +27,7 @@ def before_request(wrapped):
     def _wrapper():
         framework = cf_logging.FRAMEWORK
         cid = framework.request_reader.get_correlation_id(request)
-        framework.context.set('correlation_id', cid, request)
+        framework.context.set_correlation_id(cid, request)
         framework.context.set('request_started_at', datetime.utcnow(), request)
         return wrapped()
     return _wrapper

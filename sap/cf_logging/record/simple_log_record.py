@@ -1,6 +1,7 @@
 """ Module SimpleLogRecord """
 import logging
 from datetime import datetime
+from sap.cf_logging import defaults
 from sap.cf_logging.core.constants import REQUEST_KEY, RESPONSE_KEY
 from sap.cf_logging.record import application_info
 from sap.cf_logging.record import util
@@ -26,11 +27,7 @@ class SimpleLogRecord(logging.LogRecord):
 
         request = extra[REQUEST_KEY] if extra and REQUEST_KEY in extra else None
 
-        correlation_id = None
-        if framework:
-            correlation_id = framework.context.get('correlation_id', request)
-
-        self.correlation_id = correlation_id or '-'
+        self.correlation_id = framework.context.get_correlation_id(request) or defaults.UNKNOWN
 
         self.extra = dict((key, value) for key, value in extra.items()
                           if key not in _SKIP_ATTRIBUTES) if extra else {}

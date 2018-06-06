@@ -29,7 +29,7 @@ class LoggingMiddleware:
         """
         framework = cf_logging.FRAMEWORK
         cid = framework.request_reader.get_correlation_id(request)
-        framework.context.set('correlation_id', cid, request)
+        framework.context.set_correlation_id(cid, request)
         framework.context.set('request_started_at', datetime.utcnow(), request)
         request.log = lambda msg, lvl=logging.INFO, extra={}: logging.getLogger(
             self._logger_name).log(lvl, msg, extra=extra.update({REQUEST_KEY: request}) or extra)

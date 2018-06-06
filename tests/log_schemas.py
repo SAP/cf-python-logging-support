@@ -13,7 +13,7 @@ CF_ATTRIBUTES_SCHEMA = {
     'component_type': u.string(u.TEXT)
 }
 
-CLI_LOG_SCHEMA = u.extend(CF_ATTRIBUTES_SCHEMA, {
+JOB_LOG_SCHEMA = u.extend(CF_ATTRIBUTES_SCHEMA, {
     'type': {
         'in': ['log'],
         'in_error': 'Invalid "type" property'

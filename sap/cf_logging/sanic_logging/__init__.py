@@ -26,7 +26,7 @@ def before_request(wrapped):
     @wraps(wrapped)
     def _wrapper(request):
         correlation_id = cf_logging.FRAMEWORK.request_reader.get_correlation_id(request)
-        cf_logging.FRAMEWORK.context.set('correlation_id', correlation_id, request)
+        cf_logging.FRAMEWORK.context.set_correlation_id(correlation_id, request)
         cf_logging.FRAMEWORK.context.set('request_started_at', datetime.utcnow(), request)
         return wrapped(request)
 
