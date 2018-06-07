@@ -14,7 +14,7 @@ from sap.cf_logging.core.constants import REQUEST_KEY, RESPONSE_KEY
 
 FRAMEWORK = None
 
-@pytest.yield_fixture(autouse=True)
+@pytest.fixture(autouse=True)
 def before_each_setup_mocks(mocker):
     context = Context()
     mocker.patch.object(context, 'get', return_value=None)

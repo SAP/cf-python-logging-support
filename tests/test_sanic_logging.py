@@ -6,7 +6,7 @@ from sanic.response import text
 from sap import cf_logging
 
 from sap.cf_logging import sanic_logging
-from tests.log_schemas import WEB_LOG_SCHEMA, CLI_LOG_SCHEMA
+from tests.log_schemas import WEB_LOG_SCHEMA, JOB_LOG_SCHEMA
 from tests.common_test_params import v_str, v_num, get_web_record_header_fixtures
 from tests.schema_util import extend
 from tests.util import check_log_record, config_logger, enable_sensitive_fields_logging
@@ -22,7 +22,7 @@ def test_sanic_requires_valid_app():
 FIXTURE = get_web_record_header_fixtures()
 FIXTURE.append(({'no-content-length': '1'}, {'response_size_b': v_num(-1)}))
 
-@pytest.yield_fixture(autouse=True)
+@pytest.fixture(autouse=True)
 def before_each():
     """ enable all fields to be logged """
     enable_sensitive_fields_logging()
@@ -85,7 +85,7 @@ def _user_logging(headers, extra, expected, provide_request=False):
         logger, stream = config_logger('user.logging')
         new_extra = extend(extra, {'request': request}) if provide_request else extra
         logger.info('in route headers', extra=new_extra)
-        assert check_log_record(stream, CLI_LOG_SCHEMA, expected) == {}
+        assert check_log_record(stream, JOB_LOG_SCHEMA, expected) == {}
         return text('ok')
 
     _set_up_sanic_logging(app)

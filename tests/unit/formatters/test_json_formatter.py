@@ -1,6 +1,7 @@
 """ Tests json log formatting """
 import json
 import logging
+from sap.cf_logging.job_logging.framework import JobFramework
 from sap.cf_logging.record.simple_log_record import SimpleLogRecord
 from sap.cf_logging.formatters.json_formatter import JsonFormatter
 
@@ -19,8 +20,10 @@ def test_non_json_serializable():
     """ test json formatter handles non JSON serializable object """
     class _MyClass(object): # pylint: disable=too-few-public-methods
         pass
+
     extra = {'cls': _MyClass()}
-    log_record = SimpleLogRecord(extra, None, 'name', LEVEL, FILE, LINE, 'msg', [], EXC_INFO)
+    framework = JobFramework()
+    log_record = SimpleLogRecord(extra, framework, 'name', LEVEL, FILE, LINE, 'msg', [], EXC_INFO)
     record_object = json.loads(FORMATTER.format(log_record))
     assert record_object.get('cls') is not None
     assert 'MyClass' in record_object.get('cls')

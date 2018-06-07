@@ -6,7 +6,7 @@ from falcon import testing
 from falcon_auth import FalconAuthMiddleware, BasicAuthBackend
 from sap import cf_logging
 from sap.cf_logging import falcon_logging
-from tests.log_schemas import WEB_LOG_SCHEMA, CLI_LOG_SCHEMA
+from tests.log_schemas import WEB_LOG_SCHEMA, JOB_LOG_SCHEMA
 from tests.common_test_params import (
     v_str, auth_basic, get_web_record_header_fixtures
 )
@@ -15,7 +15,7 @@ from tests.util import check_log_record, config_root_logger, enable_sensitive_fi
 
 # pylint: disable=protected-access, missing-docstring,too-few-public-methods
 
-@pytest.yield_fixture(autouse=True)
+@pytest.fixture(autouse=True)
 def before_each():
     """ enable all fields to be logged """
     enable_sensitive_fields_logging()
@@ -110,7 +110,7 @@ class UserResourceRoute:
     def on_get(self, req, resp):
         _, stream = config_root_logger('user.logging')
         req.log('in route headers', extra=self.extra)
-        assert check_log_record(stream, CLI_LOG_SCHEMA, self.expected) == {}
+        assert check_log_record(stream, JOB_LOG_SCHEMA, self.expected) == {}
 
         resp.set_header('Content-Type', 'text/plain')
         resp.status = falcon.HTTP_200

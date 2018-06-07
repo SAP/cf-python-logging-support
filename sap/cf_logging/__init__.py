@@ -4,10 +4,11 @@ import sys
 
 from sap.cf_logging import defaults
 from sap.cf_logging.core.constants import REQUEST_KEY, RESPONSE_KEY
-from sap.cf_logging.record.request_log_record import RequestWebRecord
-from sap.cf_logging.record.simple_log_record import SimpleLogRecord
 from sap.cf_logging.core.framework import Framework
 from sap.cf_logging.formatters.json_formatter import JsonFormatter
+from sap.cf_logging.job_logging.framework import JobFramework
+from sap.cf_logging.record.request_log_record import RequestWebRecord
+from sap.cf_logging.record.simple_log_record import SimpleLogRecord
 
 __version__ = '3.2.0'
 
@@ -34,7 +35,6 @@ class CfLogger(logging.Logger):
         return cls(extra, FRAMEWORK, name, level, fn, lno, msg, msgargs, exc_info,
                    func, *args, **kwargs)
 
-
 def init(cfl_framework=None, level=defaults.DEFAULT_LOGGING_LEVEL):
     """ Initialize function. It sets up the logging library to output JSON
         formatted messages.
@@ -50,7 +50,7 @@ def init(cfl_framework=None, level=defaults.DEFAULT_LOGGING_LEVEL):
         raise TypeError('expecting framework of type {}'.format(Framework.__name__))
 
     _SETUP_DONE = True
-    FRAMEWORK = cfl_framework
+    FRAMEWORK = cfl_framework or JobFramework()
 
     logging.setLoggerClass(CfLogger)
 
