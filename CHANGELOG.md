@@ -5,11 +5,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## 3.3.0 - 2018-06-07
+
+### Added
+ - Support set and get correlation ID
+
 ## 3.2.0 - 2018-05-31
 
 ### Added
  - Support for Falcon web framework
- 
+
 ### Changed
  - Hide sensitive fields by default
 
