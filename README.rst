@@ -159,7 +159,8 @@ Setting and getting correlation ID
 """"""""""""""""""""""""""""""""""
 
 When using cf_logging in a web application you don't need to set the correlation ID, because the logging library will fetch it from the HTTP headers and set it.
-For non web applications you could set the correlation ID manually, so that the log entries can be filtered later on based on the correlation_id.
+For non web applications you could set the correlation ID manually, so that the log entries can be filtered later on based on the ``correlation_id`` log property.
+In this case the correlation ID is kept in a thread local variable and each thread should set its own correlation ID.
 
 Setting and getting the correlation_id can be done via:
 
@@ -168,11 +169,7 @@ Setting and getting the correlation_id can be done via:
     cf_logging.FRAMEWORK.context.get_correlation_id()
     cf_logging.FRAMEWORK.context.set_correlation_id(value)
 
-Whenever a correlation id is set after initializing cf_logging without a specific framework (ex: cf_logging.init()) - this same correlation ID would be used for each log record.
-
-If you need a *thread safe* correlation ID, you can reuse the ``cf_logging.job_loffing.framework.JobFramework`` and provide your own context implementation that is *thread safe*.
-
-If you need to get the correlation_id in a web application, take into account the framework you are using.
+If you need to get the correlation ID in a web application, take into account the framework you are using.
 In async frameworks like Sanic and Falcon the context is stored into the request object and you need to provide the request to the call:
 
 .. code:: python
