@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## 3.3.1 - 2018-06-18
+
+### Fixed
+ - Correlation ID should be thread safe
+
 ## 3.3.0 - 2018-06-07
 
 ### Added
