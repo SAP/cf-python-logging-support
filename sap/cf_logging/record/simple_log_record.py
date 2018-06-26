@@ -6,6 +6,8 @@ from sap.cf_logging.core.constants import REQUEST_KEY, RESPONSE_KEY
 from sap.cf_logging.record import application_info
 from sap.cf_logging.record import util
 
+from sap.cf_logging.formatters.stacktrace_formatter import StacktraceFormatter
+
 _SKIP_ATTRIBUTES = ["type", "written_at", "written_ts", "correlation_id", "remote_user", "referer",
                     "x_forwarded_for", "protocol", "method", "remote_ip", "request_size_b",
                     "remote_host", "remote_port", "request_received_at", "direction",
@@ -64,7 +66,7 @@ class SimpleLogRecord(logging.LogRecord):
         })
 
         if record.get('level') == 'ERROR':
-            fmt = logging.Formatter()
+            fmt = StacktraceFormatter(self.exc_info)
             record['stacktrace'] = fmt.formatException(self.exc_info)
 
         record.update(self.extra)
