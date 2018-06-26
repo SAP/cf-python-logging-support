@@ -7,7 +7,7 @@ from sap import cf_logging
 from sap.cf_logging import flask_logging
 from tests.log_schemas import WEB_LOG_SCHEMA, JOB_LOG_SCHEMA
 from tests.common_test_params import v_str, v_num, auth_basic, get_web_record_header_fixtures
-from tests.util import check_log_record, config_root_logger, enable_sensitive_fields_logging
+from tests.util import check_log_record, config_root_logger, enable_sensitive_fields_logging, check_exception_record
 
 
 # pylint: disable=protected-access
@@ -60,11 +60,33 @@ def test_correlation_id():
                   {},
                   {'correlation_id': v_str('298ebf9d-be1d-11e7-88ff-2c44fd152860')})
 
+def test_stacktrace():
+    """ Test the stacktrace from an exception is correctly formatted and logged """
+    _user_logging_exception("ZeroDivisionError: division by zero")
+
 
 # Helper functions
 def _set_up_flask_logging(app, level=logging.DEBUG):
     cf_logging._SETUP_DONE = False
     flask_logging.init(app, level)
+
+
+def _user_logging_exception(expected):
+    app = Flask(__name__)
+
+    @app.route('/test/user/logging/exception')
+    def _logging_exception_route():
+        try:
+            logger, stream = config_root_logger('user.logging')
+            1 / 0
+        except ZeroDivisionError:
+            logger.exception("zero division")
+            assert check_exception_record(stream, expected)
+            return Response('ok',status=404)
+
+    _set_up_flask_logging(app)
+    client = app.test_client()
+    _check_expected_response(client.get('/test/user/logging/exception'), status_code=404)
 
 
 def _user_logging(headers, extra, expected):

@@ -26,7 +26,7 @@ JOB_LOG_SCHEMA = u.extend(CF_ATTRIBUTES_SCHEMA, {
     'written_at': u.iso_datetime(),
     'written_ts': u.pos_num(),
     'msg': u.string(u.WORD),
-    'component_type': u.string(r'^application$')
+    'component_type': u.string(r'^application$'),
 })
 
 WEB_LOG_SCHEMA = u.extend(CF_ATTRIBUTES_SCHEMA, {

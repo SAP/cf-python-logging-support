@@ -63,5 +63,9 @@ class SimpleLogRecord(logging.LogRecord):
             'msg': self.getMessage(),
         })
 
+        if record.get('level') == 'ERROR':
+            fmt = logging.Formatter()
+            record['stacktrace'] = fmt.formatException(self.exc_info)
+
         record.update(self.extra)
         return record

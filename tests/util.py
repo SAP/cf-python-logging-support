@@ -25,6 +25,18 @@ def check_log_record(stream, schema, expected):
     return error
 
 
+def check_exception_record(stream, expected):
+    """ Check that the exception is correctly logged """
+    log_json = stream.getvalue()
+    log_object = json.JSONDecoder().decode(log_json)
+    stacktrace = log_object.get('stacktrace', '')
+
+    if expected in stacktrace:
+        return True
+
+    return False
+
+
 def config_root_logger(logger_name):
     """ Function to configure a JSONLogger and print the output into a stream"""
     stream = io.StringIO()
