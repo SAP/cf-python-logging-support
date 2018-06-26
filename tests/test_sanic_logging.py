@@ -9,7 +9,7 @@ from sap.cf_logging import sanic_logging
 from tests.log_schemas import WEB_LOG_SCHEMA, JOB_LOG_SCHEMA
 from tests.common_test_params import v_str, v_num, get_web_record_header_fixtures
 from tests.schema_util import extend
-from tests.util import check_log_record, config_logger, enable_sensitive_fields_logging
+from tests.util import check_log_record, config_logger, enable_sensitive_fields_logging, check_exception_record
 
 
 # pylint: disable=protected-access
@@ -22,11 +22,13 @@ def test_sanic_requires_valid_app():
 FIXTURE = get_web_record_header_fixtures()
 FIXTURE.append(({'no-content-length': '1'}, {'response_size_b': v_num(-1)}))
 
+
 @pytest.fixture(autouse=True)
 def before_each():
     """ enable all fields to be logged """
     enable_sensitive_fields_logging()
     yield
+
 
 @pytest.mark.parametrize("headers, expected", FIXTURE)
 def test_sanic_request_log(headers, expected):
@@ -45,7 +47,8 @@ def test_sanic_request_log(headers, expected):
     _, stream = config_logger('cf.sanic.logger')
 
     client = app.test_client
-    _check_expected_response(client.get('/test/path', headers=headers)[1], 200, 'ok')
+    _check_expected_response(client.get(
+        '/test/path', headers=headers)[1], 200, 'ok')
     assert check_log_record(stream, WEB_LOG_SCHEMA, expected) == {}
 
 
@@ -71,6 +74,11 @@ def test_logs_correlation_id():
                   True)
 
 
+def test_stacktrace():
+    """ Test the stacktrace from an exception is logged correctly """
+    _user_logging_exception("ZeroDivisionError: division by zero")
+
+
 # Helper functions
 def _set_up_sanic_logging(app, level=logging.DEBUG):
     cf_logging._SETUP_DONE = False
@@ -91,6 +99,25 @@ def _user_logging(headers, extra, expected, provide_request=False):
     _set_up_sanic_logging(app)
     client = app.test_client
     _check_expected_response(client.get('/test/user/logging', headers=headers)[1])
+
+
+def _user_logging_exception(expected):
+    app = sanic.Sanic(__name__)
+
+    @app.route('/test/user/logging/exception')
+    async def _logging_exception_route(request):
+        try:
+            logger, stream = config_logger('user.logging')
+            extra = {'request': request}
+            1/0
+        except ZeroDivisionError:
+            logger.exception('zero division error', extra=extra)
+            assert check_exception_record(stream, expected)
+            return text('ok')
+
+    _set_up_sanic_logging(app)
+    client = app.test_client
+    _check_expected_response(client.get('/test/user/logging/exception')[1])
 
 
 def _check_expected_response(response, status_code=200, body=None):

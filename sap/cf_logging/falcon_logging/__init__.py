@@ -33,6 +33,8 @@ class LoggingMiddleware:
         framework.context.set('request_started_at', datetime.utcnow(), request)
         request.log = lambda msg, lvl=logging.INFO, extra={}: logging.getLogger(
             self._logger_name).log(lvl, msg, extra=extra.update({REQUEST_KEY: request}) or extra)
+        request.exception = lambda msg, extra={}: logging.getLogger(
+            self._logger_name).exception(msg, extra=extra.update({REQUEST_KEY: request}) or extra)
 
     def process_response(self, request, response, resource, req_succeeded): # pylint: disable=unused-argument
         """Post-processing of the response (after routing).

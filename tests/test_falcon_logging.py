@@ -10,7 +10,7 @@ from tests.log_schemas import WEB_LOG_SCHEMA, JOB_LOG_SCHEMA
 from tests.common_test_params import (
     v_str, auth_basic, get_web_record_header_fixtures
 )
-from tests.util import check_log_record, config_root_logger, enable_sensitive_fields_logging
+from tests.util import check_log_record, config_root_logger, enable_sensitive_fields_logging, check_exception_record
 
 
 # pylint: disable=protected-access, missing-docstring,too-few-public-methods
@@ -95,26 +95,44 @@ def test_correlation_id():
     )
 
 
+def test_stacktrace():
+    """ Test the stacktrace is correctly formatted """
+    _user_logging_exception({}, "ZeroDivisionError: division by zero")
+
+
 # Helper functions
 def _set_up_falcon_logging(app, *args):
     cf_logging._SETUP_DONE = False
     falcon_logging.init(app, logging.DEBUG, *args)
 
 
-class UserResourceRoute:
-
+class UserResourceMixin:
     def __init__(self, extra, expected):
         self.extra = extra
         self.expected = expected
+        _, self.stream = config_root_logger('user.logging')
 
+
+class UserResourceRoute(UserResourceMixin):
     def on_get(self, req, resp):
-        _, stream = config_root_logger('user.logging')
         req.log('in route headers', extra=self.extra)
-        assert check_log_record(stream, JOB_LOG_SCHEMA, self.expected) == {}
+        assert check_log_record(self.stream, JOB_LOG_SCHEMA, self.expected) == {}
 
         resp.set_header('Content-Type', 'text/plain')
         resp.status = falcon.HTTP_200
         resp.body = 'ok'
+
+
+class UserResourceExceptionRoute(UserResourceMixin):
+    def on_get(self, req, resp):
+        try:
+            1/0
+        except:
+            req.exception('zero division error')
+            assert check_exception_record(self.stream, self.expected)
+            resp.set_header('Content-Type', 'text/plain')
+            resp.status = falcon.HTTP_404
+            resp.body = 'ok'
 
 
 def _user_logging(headers, extra, expected):
@@ -126,6 +144,16 @@ def _user_logging(headers, extra, expected):
     client = testing.TestClient(app)
     _check_expected_response(client.simulate_get('/test/user/logging',
                                                  headers=headers))
+
+
+def _user_logging_exception(extra, expected):
+    app = falcon.API(middleware=[
+        falcon_logging.LoggingMiddleware()
+    ])
+    app.add_route('/test/user/logging/exception', UserResourceExceptionRoute(extra, expected))
+    _set_up_falcon_logging(app)
+    client = testing.TestClient(app)
+    _check_expected_response(client.simulate_get('/test/user/logging/exception'), status_code=404)
 
 
 def _check_expected_response(response, status_code=200, body='ok'):
