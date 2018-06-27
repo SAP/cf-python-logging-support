@@ -82,11 +82,11 @@ def _user_logging_exception(expected):
         except ZeroDivisionError:
             logger.exception("zero division")
             assert check_exception_record(stream, expected)
-            return Response('error',status=404)
+            return Response('ok',status=404)
 
     _set_up_flask_logging(app)
     client = app.test_client()
-    _check_expected_response(client.get('/test/user/logging/exception'), status_code=404, body='error')
+    _check_expected_response(client.get('/test/user/logging/exception'), status_code=404)
 
 
 def _user_logging(headers, extra, expected):

@@ -1,5 +1,7 @@
 """ Module SimpleLogRecord """
 import logging
+import traceback
+
 from datetime import datetime
 from sap.cf_logging import defaults
 from sap.cf_logging.core.constants import REQUEST_KEY, RESPONSE_KEY
@@ -66,8 +68,9 @@ class SimpleLogRecord(logging.LogRecord):
         })
 
         if record.get('level') == 'ERROR':
-            fmt = StacktraceFormatter(self.exc_info)
-            record['stacktrace'] = fmt.formatException(self.exc_info)
+            stacktrace = ''.join(traceback.format_exception(*self.exc_info))
+            fmt = StacktraceFormatter(stacktrace)
+            record['stacktrace'] = fmt.format()
 
         record.update(self.extra)
         return record
