@@ -9,7 +9,12 @@ from sap.cf_logging import sanic_logging
 from tests.log_schemas import WEB_LOG_SCHEMA, JOB_LOG_SCHEMA
 from tests.common_test_params import v_str, v_num, get_web_record_header_fixtures
 from tests.schema_util import extend
-from tests.util import check_log_record, config_logger, enable_sensitive_fields_logging, check_exception_record
+from tests.util import (
+    check_log_record,
+    config_logger,
+    enable_sensitive_fields_logging,
+    check_exception_record
+)
 
 
 # pylint: disable=protected-access
@@ -76,7 +81,7 @@ def test_logs_correlation_id():
 
 def test_stacktrace():
     """ Test the stacktrace from an exception is logged correctly """
-    _user_logging_exception("ZeroDivisionError: division by zero")
+    _user_logging_exception("ZeroDivisionError")
 
 
 # Helper functions
@@ -109,7 +114,7 @@ def _user_logging_exception(expected):
         try:
             logger, stream = config_logger('user.logging')
             extra = {'request': request}
-            1/0
+            return 1/0
         except ZeroDivisionError:
             logger.exception('zero division error', extra=extra)
             assert check_exception_record(stream, expected)

@@ -10,7 +10,12 @@ from tests.log_schemas import WEB_LOG_SCHEMA, JOB_LOG_SCHEMA
 from tests.common_test_params import (
     v_str, auth_basic, get_web_record_header_fixtures
 )
-from tests.util import check_log_record, config_root_logger, enable_sensitive_fields_logging, check_exception_record
+from tests.util import (
+    check_log_record,
+    config_root_logger,
+    enable_sensitive_fields_logging,
+    check_exception_record
+)
 
 
 # pylint: disable=protected-access, missing-docstring,too-few-public-methods
@@ -97,7 +102,7 @@ def test_correlation_id():
 
 def test_stacktrace():
     """ Test the stacktrace is correctly formatted """
-    _user_logging_exception({}, "ZeroDivisionError: division by zero")
+    _user_logging_exception({}, "ZeroDivisionError")
 
 
 # Helper functions
@@ -127,7 +132,7 @@ class UserResourceExceptionRoute(UserResourceMixin):
     def on_get(self, req, resp):
         try:
             1/0
-        except:
+        except ZeroDivisionError:
             req.exception('zero division error')
             assert check_exception_record(self.stream, self.expected)
             resp.set_header('Content-Type', 'text/plain')

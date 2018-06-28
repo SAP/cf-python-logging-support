@@ -31,7 +31,7 @@ def check_exception_record(stream, expected):
     log_object = json.JSONDecoder().decode(log_json)
     stacktrace = log_object.get('stacktrace', '')
 
-    if expected in stacktrace:
+    if expected in str(stacktrace):
         return True
 
     return False
