@@ -9,8 +9,8 @@ from tests.log_schemas import WEB_LOG_SCHEMA, JOB_LOG_SCHEMA
 from tests.common_test_params import v_str, v_num, auth_basic, get_web_record_header_fixtures
 from tests.util import (
     check_log_record,
-    config_root_logger,
     enable_sensitive_fields_logging,
+    config_root_logger,
     check_exception_record
 )
 
@@ -31,6 +31,7 @@ FIXTURE.append(({}, {'response_size_b': v_num(val=2)}))
 
 @pytest.fixture(autouse=True)
 def before_each():
+    # pylint: disable=duplicate-code
     """ enable all fields to be logged """
     enable_sensitive_fields_logging()
     yield

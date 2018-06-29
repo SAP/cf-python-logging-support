@@ -11,14 +11,14 @@ class StacktraceFormatter:
     """
 
     def __init__(self, stacktrace):
-        self.stacktrace = stacktrace
+        self._stacktrace = stacktrace
 
     def format(self):
         """
         Removes newline and tab characters
         Truncates stacktrace to maximum size
         """
-        stacktrace = re.sub('\n|\t', '  ', self.stacktrace)
+        stacktrace = re.sub('\n|\t', '  ', self._stacktrace)
 
         if len(stacktrace) <= constants.STACKTRACE_MAX_SIZE:
             return stacktrace
@@ -39,18 +39,18 @@ class StacktraceFormatter:
     @property
     def stacktrace_length(self):
         """ Gets the length of the stacktrace """
-        return len(self.stacktrace)
+        return len(self._stacktrace)
 
     def stacktrace_beginning(self, size):
         """ Gets the first `size` bytes of the stacktrace """
         if self.stacktrace_length <= size:
-            return self.stacktrace
+            return self._stacktrace
 
-        return self.stacktrace[:size]
+        return self._stacktrace[:size]
 
     def stacktrace_end(self, size):
         """ Gets the last `size` bytes of the stacktrace """
         if self.stacktrace_length <= size:
-            return self.stacktrace
+            return self._stacktrace
 
-        return self.stacktrace[:-(self.stacktrace_length-size)]
+        return self._stacktrace[:-(self.stacktrace_length-size)]
