@@ -15,13 +15,13 @@ from sap.cf_logging.falcon_logging.response_reader import FalconResponseReader
 FALCON_FRAMEWORK_NAME = 'falcon.framework'
 
 
-class LoggingMiddleware:
+class LoggingMiddleware(object):
     """ Falcon logging middleware """
 
     def __init__(self, logger_name='cf.falcon.logger'):
         self._logger_name = logger_name
 
-    def process_request(self, request, response): # pylint: disable=unused-argument
+    def process_request(self, request, response): # pylint: disable=unused-argument,no-self-use
         """Process the request before routing it.
 
         :param request: - Falcon Request object
@@ -31,10 +31,6 @@ class LoggingMiddleware:
         cid = framework.request_reader.get_correlation_id(request)
         framework.context.set_correlation_id(cid, request)
         framework.context.set('request_started_at', datetime.utcnow(), request)
-        request.log = lambda msg, lvl=logging.INFO, extra={}: logging.getLogger(
-            self._logger_name).log(lvl, msg, extra=extra.update({REQUEST_KEY: request}) or extra)
-        request.exception = lambda msg, extra={}: logging.getLogger(
-            self._logger_name).exception(msg, extra=extra.update({REQUEST_KEY: request}) or extra)
 
     def process_response(self, request, response, resource, req_succeeded): # pylint: disable=unused-argument
         """Post-processing of the response (after routing).

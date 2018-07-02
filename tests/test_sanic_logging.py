@@ -13,7 +13,6 @@ from tests.util import (
     check_log_record,
     config_logger,
     enable_sensitive_fields_logging,
-    check_exception_record
 )
 
 
@@ -79,11 +78,6 @@ def test_logs_correlation_id():
                   True)
 
 
-def test_stacktrace():
-    """ Test the stacktrace from an exception is logged correctly """
-    _user_logging_exception("ZeroDivisionError")
-
-
 # Helper functions
 def _set_up_sanic_logging(app, level=logging.DEBUG):
     cf_logging._SETUP_DONE = False
@@ -104,25 +98,6 @@ def _user_logging(headers, extra, expected, provide_request=False):
     _set_up_sanic_logging(app)
     client = app.test_client
     _check_expected_response(client.get('/test/user/logging', headers=headers)[1])
-
-
-def _user_logging_exception(expected):
-    app = sanic.Sanic(__name__)
-
-    @app.route('/test/user/logging/exception')
-    async def _logging_exception_route(request):
-        try:
-            logger, stream = config_logger('user.logging')
-            extra = {'request': request}
-            return 1/0
-        except ZeroDivisionError:
-            logger.exception('zero division error', extra=extra)
-            assert check_exception_record(stream, expected)
-            return text('ok')
-
-    _set_up_sanic_logging(app)
-    client = app.test_client
-    _check_expected_response(client.get('/test/user/logging/exception')[1])
 
 
 def _check_expected_response(response, status_code=200, body=None):

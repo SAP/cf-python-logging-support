@@ -6,6 +6,7 @@ from falcon import testing
 from falcon_auth import FalconAuthMiddleware, BasicAuthBackend
 from sap import cf_logging
 from sap.cf_logging import falcon_logging
+from sap.cf_logging.core.constants import REQUEST_KEY
 from tests.log_schemas import WEB_LOG_SCHEMA, JOB_LOG_SCHEMA
 from tests.common_test_params import (
     v_str, auth_basic, get_web_record_header_fixtures
@@ -14,7 +15,7 @@ from tests.util import (
     check_log_record,
     config_root_logger,
     enable_sensitive_fields_logging,
-    check_exception_record
+    config_logger
 )
 
 
@@ -100,44 +101,26 @@ def test_correlation_id():
     )
 
 
-def test_stacktrace():
-    """ Test the stacktrace is correctly formatted """
-    _user_logging_exception({}, "ZeroDivisionError")
-
-
 # Helper functions
 def _set_up_falcon_logging(app, *args):
     cf_logging._SETUP_DONE = False
     falcon_logging.init(app, logging.DEBUG, *args)
 
 
-class UserResourceMixin:
+class UserResourceRoute(object):
     def __init__(self, extra, expected):
         self.extra = extra
         self.expected = expected
-        _, self.stream = config_root_logger('user.logging')
+        self.logger, self.stream = config_logger('user.logging')
 
-
-class UserResourceRoute(UserResourceMixin):
     def on_get(self, req, resp):
-        req.log('in route headers', extra=self.extra)
+        self.extra.update({REQUEST_KEY: req})
+        self.logger.log(logging.INFO, 'in route headers', extra=self.extra)
         assert check_log_record(self.stream, JOB_LOG_SCHEMA, self.expected) == {}
 
         resp.set_header('Content-Type', 'text/plain')
         resp.status = falcon.HTTP_200
         resp.body = 'ok'
-
-
-class UserResourceExceptionRoute(UserResourceMixin):
-    def on_get(self, req, resp):
-        try:
-            1/0
-        except ZeroDivisionError:
-            req.exception('zero division error')
-            assert check_exception_record(self.stream, self.expected)
-            resp.set_header('Content-Type', 'text/plain')
-            resp.status = falcon.HTTP_404
-            resp.body = 'ok'
 
 
 def _user_logging(headers, extra, expected):
@@ -149,16 +132,6 @@ def _user_logging(headers, extra, expected):
     client = testing.TestClient(app)
     _check_expected_response(client.simulate_get('/test/user/logging',
                                                  headers=headers))
-
-
-def _user_logging_exception(extra, expected):
-    app = falcon.API(middleware=[
-        falcon_logging.LoggingMiddleware()
-    ])
-    app.add_route('/test/user/logging/exception', UserResourceExceptionRoute(extra, expected))
-    _set_up_falcon_logging(app)
-    client = testing.TestClient(app)
-    _check_expected_response(client.simulate_get('/test/user/logging/exception'), status_code=404)
 
 
 def _check_expected_response(response, status_code=200, body='ok'):
