@@ -6,11 +6,17 @@ from falcon import testing
 from falcon_auth import FalconAuthMiddleware, BasicAuthBackend
 from sap import cf_logging
 from sap.cf_logging import falcon_logging
+from sap.cf_logging.core.constants import REQUEST_KEY
 from tests.log_schemas import WEB_LOG_SCHEMA, JOB_LOG_SCHEMA
 from tests.common_test_params import (
     v_str, auth_basic, get_web_record_header_fixtures
 )
-from tests.util import check_log_record, config_root_logger, enable_sensitive_fields_logging
+from tests.util import (
+    check_log_record,
+    config_root_logger,
+    enable_sensitive_fields_logging,
+    config_logger
+)
 
 
 # pylint: disable=protected-access, missing-docstring,too-few-public-methods
@@ -101,16 +107,16 @@ def _set_up_falcon_logging(app, *args):
     falcon_logging.init(app, logging.DEBUG, *args)
 
 
-class UserResourceRoute:
-
+class UserResourceRoute(object):
     def __init__(self, extra, expected):
         self.extra = extra
         self.expected = expected
+        self.logger, self.stream = config_logger('user.logging')
 
     def on_get(self, req, resp):
-        _, stream = config_root_logger('user.logging')
-        req.log('in route headers', extra=self.extra)
-        assert check_log_record(stream, JOB_LOG_SCHEMA, self.expected) == {}
+        self.extra.update({REQUEST_KEY: req})
+        self.logger.log(logging.INFO, 'in route headers', extra=self.extra)
+        assert check_log_record(self.stream, JOB_LOG_SCHEMA, self.expected) == {}
 
         resp.set_header('Content-Type', 'text/plain')
         resp.status = falcon.HTTP_200

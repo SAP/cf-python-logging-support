@@ -46,6 +46,23 @@ def test_set_correlation_id():
     assert log_json['correlation_id'] == correlation_id
     assert cf_logging.FRAMEWORK.context.get_correlation_id() == correlation_id
 
+
+def test_exception_stacktrace():
+    """ Test exception stacktrace is logged """
+    cf_logging.init(level=logging.DEBUG)
+    logger, stream = config_root_logger('cli.test')
+
+    try:
+        return 1 / 0
+    except ZeroDivisionError:
+        logger.exception('zero division error')
+        log_json = JSONDecoder().decode(stream.getvalue())
+        _, error = JsonValidator(JOB_LOG_SCHEMA).validate(log_json)
+
+        assert error == {}
+        assert 'ZeroDivisionError' in str(log_json['stacktrace'])
+
+
 def test_thread_safety():
     """ test context keeps separate correlation ID per thread """
     class _SampleThread(threading.Thread):

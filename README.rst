@@ -121,12 +121,13 @@ Falcon
 
    import falcon
    from sap.cf_logging import falcon_logging
+   from sap.cf_logging.core.constants import REQUEST_KEY
 
 
    class Resource:
        def on_get(self, req, resp):
-           # Use the log() method of the req object to log additional messages
-           req.log('Resource requested')
+           extra = {REQUEST_KEY: req}
+           logging.getLogger('my.logger').log('Resource requested', extra=extra)
            resp.media = {'name': 'Cloud Foundry'}
 
 
@@ -135,8 +136,6 @@ Falcon
    ])
    app.add_route('/resource', Resource())
    falcon_logging.init(app)
-
-**Note**: Use the ``log`` method of ``req`` since it will include the ``correlation_id`` from the ``req`` object in the logs.
 
 General
 ^^^^^^^
