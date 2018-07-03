@@ -55,7 +55,7 @@ def test_exception_stacktrace():
     try:
         return 1 / 0
     except ZeroDivisionError:
-        logger.exception("zero division error")
+        logger.exception('zero division error')
         log_json = JSONDecoder().decode(stream.getvalue())
         _, error = JsonValidator(JOB_LOG_SCHEMA).validate(log_json)
 

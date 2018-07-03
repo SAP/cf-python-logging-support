@@ -11,7 +11,12 @@ def format_stacktrace(stacktrace):
     """
     Removes newline and tab characters
     Truncates stacktrace to maximum size
+
+    :param stacktrace: string representation of a stacktrace
     """
+    if not isinstance(stacktrace, str):
+        return ''
+
     stacktrace = re.sub('\n|\t', '  ', stacktrace)
 
     if len(stacktrace) <= constants.STACKTRACE_MAX_SIZE:
