@@ -25,14 +25,6 @@ def check_log_record(stream, schema, expected):
     return error
 
 
-def config_root_logger(logger_name):
-    """ Function to configure a JSONLogger and print the output into a stream"""
-    stream = io.StringIO()
-    logging.getLogger().handlers[0].stream = stream
-    logger = logging.getLogger(logger_name)
-    return logger, stream
-
-
 def config_logger(logger_name):
     """ Function to configure a JSONLogger and print the output into a stream"""
     stream = io.StringIO()

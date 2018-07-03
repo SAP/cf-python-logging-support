@@ -13,7 +13,6 @@ from tests.common_test_params import (
 )
 from tests.util import (
     check_log_record,
-    config_root_logger,
     enable_sensitive_fields_logging,
     config_logger
 )
@@ -79,7 +78,7 @@ def test_falcon_request_logs_user(user):
 
 
 def _check_falcon_request_log(app, headers, expected):
-    _, stream = config_root_logger('cf.falcon.logger')
+    _, stream = config_logger('cf.falcon.logger')
 
     client = testing.TestClient(app)
     _check_expected_response(

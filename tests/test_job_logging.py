@@ -8,7 +8,7 @@ import pytest
 from json_validator.validator import JsonValidator
 from sap import cf_logging
 from tests.log_schemas import JOB_LOG_SCHEMA
-from tests.util import config_root_logger
+from tests.util import config_logger
 
 # pylint: disable=protected-access
 
@@ -22,7 +22,7 @@ def before_each():
 def test_log_in_expected_format():
     """ Test the cf_logger as a standalone """
     cf_logging.init(level=logging.DEBUG)
-    logger, stream = config_root_logger('cli.test')
+    logger, stream = config_logger('cli.test')
     logger.info('hi')
     log_json = JSONDecoder().decode(stream.getvalue())
     _, error = JsonValidator(JOB_LOG_SCHEMA).validate(log_json)
@@ -36,7 +36,7 @@ def test_set_correlation_id():
     cf_logging.init(level=logging.DEBUG)
     cf_logging.FRAMEWORK.context.set_correlation_id(correlation_id)
 
-    logger, stream = config_root_logger('cli.test')
+    logger, stream = config_logger('cli.test')
     logger.info('hi')
 
     log_json = JSONDecoder().decode(stream.getvalue())
@@ -50,7 +50,7 @@ def test_set_correlation_id():
 def test_exception_stacktrace():
     """ Test exception stacktrace is logged """
     cf_logging.init(level=logging.DEBUG)
-    logger, stream = config_root_logger('cli.test')
+    logger, stream = config_logger('cli.test')
 
     try:
         return 1 / 0
