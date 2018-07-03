@@ -10,3 +10,4 @@ pytest-cov==2.5.1
 pytest-mock==1.6.3
 pylint
 tox
+django
