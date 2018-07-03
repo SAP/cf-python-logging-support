@@ -10,7 +10,7 @@ from tests.common_test_params import v_str, v_num, auth_basic, get_web_record_he
 from tests.util import (
     check_log_record,
     enable_sensitive_fields_logging,
-    config_root_logger,
+    config_logger,
 )
 
 
@@ -47,7 +47,7 @@ def test_flask_request_log(headers, expected):
         return Response('ok', mimetype='text/plain')
 
     _set_up_flask_logging(app)
-    _, stream = config_root_logger('cf.flask.logger')
+    _, stream = config_logger('cf.flask.logger')
 
     client = app.test_client()
     _check_expected_response(client.get('/test/path', headers=headers))
@@ -77,7 +77,7 @@ def _user_logging(headers, extra, expected):
 
     @app.route('/test/user/logging')
     def _logging_correlation_id_route():
-        logger, stream = config_root_logger('user.logging')
+        logger, stream = config_logger('user.logging')
         logger.info('in route headers', extra=extra)
         assert check_log_record(stream, JOB_LOG_SCHEMA, expected) == {}
         return Response('ok')
