@@ -5,6 +5,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## 4.0.0 - 2018-07-04
+
+### Added
+ - Log exception stacktrace
+
+### Changed
+ - Incompatible change: removed `log` function from request in falcon support
+
 ## 3.3.1 - 2018-06-18
 
 ### Fixed
