@@ -1,7 +1,7 @@
 """ request_reader provides an interface for the RequestReader class """
 import uuid
 
-CORRELATION_ID_HEADERS = ['X-Correlation-ID',
+CORRELATION_ID_HEADERS = ['x-Correlation-ID',
                           'X-CorrelationID', 'X-Request-ID', 'X-Vcap-Request-Id']
 
 

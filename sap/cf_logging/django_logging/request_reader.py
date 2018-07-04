@@ -21,3 +21,14 @@ class DjangoRequestReader(RequestReader):
 
     def get_remote_port(self, request):
         return request.META.get('SERVER_PORT') or defaults.UNKNOWN
+
+    def get_http_header(self, request, header_name, default=None):
+        if request is None:
+            return default
+
+        if header_name in request.META:
+            return request.META.get(header_name)
+        if header_name.upper() in request.META:
+            return request.META.get(header_name.upper())
+
+        return default

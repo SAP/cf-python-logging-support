@@ -8,11 +8,16 @@ so all log entries contain it.
 from sap.cf_logging.core.context import Context
 
 
+def _init_context(request):
+    if not hasattr(request, 'context'):
+        request.context = {}
+
 class DjangoContext(Context):
     """ Stores logging context in Django's request objecct """
 
     def set(self, key, value, request):
-        request[key] = value
+        _init_context(request)
+        request.context[key] = value
 
     def get(self, key, request):
-        return request.get(key) if request else None
+        return request.context.get(key) if request else None

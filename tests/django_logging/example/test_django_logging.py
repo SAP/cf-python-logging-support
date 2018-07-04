@@ -1,0 +1,79 @@
+import os
+import sys
+import pytest
+
+from django.test import Client
+from django.conf.urls import url
+from django.conf import settings
+
+from sap import cf_logging
+from sap.cf_logging import django_logging
+from sap.cf_logging.core.constants import REQUEST_KEY
+from tests.log_schemas import WEB_LOG_SCHEMA, JOB_LOG_SCHEMA
+from tests.common_test_params import (
+    v_str, auth_basic, get_web_record_header_fixtures
+)
+from tests.util import (
+    check_log_record,
+    enable_sensitive_fields_logging,
+    config_logger
+)
+
+from tests.django_logging.example.urls import urlpatterns
+from tests.django_logging.example.views import UserLoggingView
+
+
+@pytest.fixture(autouse=True)
+def before_each():
+    """ enable all fields to be logged """
+    enable_sensitive_fields_logging()
+    yield
+
+
+FIXTURE = get_web_record_header_fixtures()
+
+@pytest.mark.parametrize('headers, expected', FIXTURE)
+def test_django_request_log(headers, expected):
+    _set_up_django_logging()
+    _check_django_request_log(headers, expected)
+
+
+def test_web_log():
+    _user_logging({}, {'myprop': 'myval'}, {'myprop': v_str('myval')})
+
+
+def test_correlation_id():
+    _user_logging(
+        {'X-CorrelationID': '298ebf9d-be1d-11e7-88ff-2c44fd152860'},
+        {},
+        {'correlation_id': v_str('298ebf9d-be1d-11e7-88ff-2c44fd152860')}
+    )
+
+
+def _check_django_request_log(headers, expected):
+    _, stream = config_logger('cf.django.logger')
+
+    client = Client()
+    _check_expected_response(client.get('/test/path', **headers), body='Hello test!')
+    assert check_log_record(stream, WEB_LOG_SCHEMA, expected) == {}
+
+
+def _set_up_django_logging():
+    cf_logging._SETUP_DONE = False
+    django_logging.init()
+
+
+def _check_expected_response(response, status_code=200, body='ok'):
+    assert response.status_code == status_code
+    if body is not None:
+        assert response.content.decode() == body
+
+def _user_logging(headers, extra, expected):
+    sys.modules[settings.ROOT_URLCONF].urlpatterns.append(
+        url('^test/user/logging$', UserLoggingView.as_view(),
+            {'extra': extra, 'expected': expected}))
+
+
+    _set_up_django_logging()
+    client = Client()
+    _check_expected_response(client.get('/test/user/logging', **headers))

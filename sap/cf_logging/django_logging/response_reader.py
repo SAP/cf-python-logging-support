@@ -10,3 +10,6 @@ class DjangoResponseReader(ResponseReader):
 
     def get_response_size(self, response):
         return len(response.content)
+
+    def get_content_type(self, response):
+        return response.get('Content-Type')
