@@ -33,7 +33,6 @@ class LoggingMiddleware(object):
         Process the request before routing it.
 
         :param request: - Django Request object
-        :param request: - Django Response object
         """
         framework = cf_logging.FRAMEWORK
         cid = framework.request_reader.get_correlation_id(request)

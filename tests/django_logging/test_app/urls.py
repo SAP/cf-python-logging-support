@@ -1,4 +1,4 @@
-""" Urls for django example test app """
+""" Urls for example django test app """
 from django.conf.urls import url
 
 from tests.django_logging.test_app.views import IndexView

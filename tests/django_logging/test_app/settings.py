@@ -1,4 +1,4 @@
-""" Example django test project settings """
+""" Example django test app settings """
 SECRET_KEY = 'fake-key'
 INSTALLED_APPS = [
     "tests",

@@ -3,7 +3,7 @@ from sap.cf_logging.core.response_reader import ResponseReader
 
 
 class DjangoResponseReader(ResponseReader):
-    """ Read log related properties out of falcon response """
+    """ Read log related properties out of Django response """
 
     def get_status_code(self, response):
         return response.status_code
