@@ -10,7 +10,7 @@ DATABASES = {
     }
 }
 
-ROOT_URLCONF = 'tests.django_logging.example.urls'
+ROOT_URLCONF = 'tests.django_logging.test_app.urls'
 
 MIDDLEWARE = [
     'sap.cf_logging.django_logging.LoggingMiddleware',

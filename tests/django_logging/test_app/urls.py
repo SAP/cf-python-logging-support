@@ -1,7 +1,7 @@
 """ Urls for django example test app """
 from django.conf.urls import url
 
-from tests.django_logging.example.views import IndexView
+from tests.django_logging.test_app.views import IndexView
 
 # pylint: disable=invalid-name
 urlpatterns = [

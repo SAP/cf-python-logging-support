@@ -18,7 +18,7 @@ from tests.util import (
     config_logger
 )
 
-from tests.django_logging.example.views import UserLoggingView
+from tests.django_logging.test_app.views import UserLoggingView
 
 
 @pytest.fixture(autouse=True)
