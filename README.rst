@@ -23,6 +23,7 @@ Features
   * `Flask 0.1x <http://flask.pocoo.org/>`__
   * `Sanic 0.5.x <https://github.com/channelcat/sanic>`__
   * `Falcon <https://falconframework.org/>`__
+  * `Django <https://www.djangoproject.com/>`__
   * Extensible to support others
 
 6. Includes CF-specific information (space id, app id, etc.) to logs.
@@ -136,6 +137,77 @@ Falcon
    ])
    app.add_route('/resource', Resource())
    falcon_logging.init(app)
+
+Django
+^^^^^^
+
+For django logging you have to edit a couple of files:
+
+.. code:: bash
+
+    django-admin startproject example
+
+.. code:: python
+
+    # example/settings.py
+
+        MIDDLEWARES = [
+            # ...,
+            'sap.cf_logging.django_logging.LoggingMiddleware'
+        ]
+
+    # example/wsgi.py
+
+        # ...
+        from sap.cf_logging import django_logging
+
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "sap_logtesting.settings")
+        django_logging.init()
+
+        # ...
+
+Create a new app
+
+.. code:: bash
+
+    python manage.py startapp example_app
+
+.. code:: python
+
+    # example_app/views.py
+
+        import logging
+
+        from django.http import HTTPResponse
+        from sap.cf_logging.core.constants import REQUEST_KEY
+
+        def index(request):
+            extra = {REQUEST_KEY: request}
+            logger = logging.getLogger('my.logger')
+            logger.info("Resource requested", extra=extra)
+            return HttpResponse("ok")
+
+    # example_app/urls.py
+
+        from django.conf.urls import url
+
+        from . import views
+
+        urlpatterns = [
+            url('^$', views.index)
+        ]
+
+    # example/urls.py
+
+        from django.contrib import admin
+        from django.conf.urls import url, include
+
+        urlpatterns = [
+            url('admin/', admin.site.urls),
+            url('example/', include('example_app.urls'))
+        ]
+
+**Note**: The library works with Django 2.x as well, the example is in an earlier version for python 2 compatibility.
 
 General
 ^^^^^^^
