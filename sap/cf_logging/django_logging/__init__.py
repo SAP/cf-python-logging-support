@@ -1,3 +1,4 @@
+""" Logging support for Django based applications """
 import logging
 from datetime import datetime
 
@@ -27,7 +28,7 @@ class LoggingMiddleware(object):
         response = self.process_response(request, response)
         return response
 
-    def process_request(self, request):
+    def process_request(self, request):# pylint: disable=no-self-use
         """
         Process the request before routing it.
 

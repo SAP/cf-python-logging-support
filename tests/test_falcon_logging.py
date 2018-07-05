@@ -13,9 +13,8 @@ from tests.common_test_params import (
 )
 from tests.util import (
     check_log_record,
-    config_root_logger,
-    enable_sensitive_fields_logging,
-    config_logger
+    config_logger,
+    enable_sensitive_fields_logging
 )
 
 
@@ -95,7 +94,7 @@ def test_web_log():
 def test_correlation_id():
     """ Test the correlation id is logged when coming from the headers """
     _user_logging(
-        {'X-CorrelationID': '298ebf9d-be1d-11e7-88ff-2c44fd152860'},
+        {'x-Correlation-ID': '298ebf9d-be1d-11e7-88ff-2c44fd152860'},
         {},
         {'correlation_id': v_str('298ebf9d-be1d-11e7-88ff-2c44fd152860')}
     )

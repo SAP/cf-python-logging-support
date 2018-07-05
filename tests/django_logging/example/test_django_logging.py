@@ -1,4 +1,4 @@
-import os
+""" Module that tests the integration of cf_logging with Django """
 import sys
 import pytest
 
@@ -8,10 +8,9 @@ from django.conf import settings
 
 from sap import cf_logging
 from sap.cf_logging import django_logging
-from sap.cf_logging.core.constants import REQUEST_KEY
-from tests.log_schemas import WEB_LOG_SCHEMA, JOB_LOG_SCHEMA
+from tests.log_schemas import WEB_LOG_SCHEMA
 from tests.common_test_params import (
-    v_str, auth_basic, get_web_record_header_fixtures
+    v_str, get_web_record_header_fixtures
 )
 from tests.util import (
     check_log_record,
@@ -19,7 +18,6 @@ from tests.util import (
     config_logger
 )
 
-from tests.django_logging.example.urls import urlpatterns
 from tests.django_logging.example.views import UserLoggingView
 
 
@@ -34,15 +32,18 @@ FIXTURE = get_web_record_header_fixtures()
 
 @pytest.mark.parametrize('headers, expected', FIXTURE)
 def test_django_request_log(headers, expected):
+    """ That the expected records are logged by the logging library """
     _set_up_django_logging()
     _check_django_request_log(headers, expected)
 
 
 def test_web_log():
-    _user_logging({}, {'myprop': 'myval'}, {'myprop': v_str('myval')})
+    """ That the custom properties are logged """
+    _user_logging({}, {'myproperty': 'myval'}, {'myproperty': v_str('myval')})
 
 
 def test_correlation_id():
+    """ Test the correlation id is logged when coming from the headers """
     _user_logging(
         {'X-CorrelationID': '298ebf9d-be1d-11e7-88ff-2c44fd152860'},
         {},
@@ -58,8 +59,9 @@ def _check_django_request_log(headers, expected):
     assert check_log_record(stream, WEB_LOG_SCHEMA, expected) == {}
 
 
+# Helper functions
 def _set_up_django_logging():
-    cf_logging._SETUP_DONE = False
+    cf_logging._SETUP_DONE = False # pylint: disable=protected-access
     django_logging.init()
 
 
