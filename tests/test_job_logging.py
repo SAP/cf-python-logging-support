@@ -19,11 +19,18 @@ def before_each():
     cf_logging._SETUP_DONE = False
 
 
-def test_log_in_expected_format():
+@pytest.mark.parametrize('log_callback', [
+    lambda logger, msg: logger.debug('message: %s', msg),
+    lambda logger, msg: logger.info('message: %s', msg),
+    lambda logger, msg: logger.warning('message: %s', msg),
+    lambda logger, msg: logger.error('message: %s', msg),
+    lambda logger, msg: logger.critical('message: %s', msg)
+])
+def test_log_in_expected_format(log_callback):
     """ Test the cf_logger as a standalone """
     cf_logging.init(level=logging.DEBUG)
     logger, stream = config_logger('cli.test')
-    logger.info('hi')
+    log_callback(logger, 'hi')
     log_json = JSONDecoder().decode(stream.getvalue())
     _, error = JsonValidator(JOB_LOG_SCHEMA).validate(log_json)
 

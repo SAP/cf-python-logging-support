@@ -6,7 +6,7 @@ STRING_NUM = r'[\d+|-]'
 IP = r'[[0-9]+|.?]+\d$'
 HOST_NAME = r'[[0-9]+|.?]+\d$'
 
-LEVEL = ['CRITICAL', 'ERROR', 'WARNING', 'INFO', 'NOTSET']
+LEVEL = ['CRITICAL', 'ERROR', 'WARNING', 'INFO', 'DEBUG', 'NOTSET']
 
 
 def num(val=None):
