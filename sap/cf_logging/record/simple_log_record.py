@@ -67,7 +67,7 @@ class SimpleLogRecord(logging.LogRecord):
             'msg': self.getMessage(),
         })
 
-        if self.levelno == logging.ERROR:
+        if self.levelno == logging.ERROR and self.exc_info:
             stacktrace = ''.join(traceback.format_exception(*self.exc_info))
             record['stacktrace'] = format_stacktrace(stacktrace)
 
