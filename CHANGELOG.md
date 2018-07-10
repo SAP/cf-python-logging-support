@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## 4.0.1 - 2018-07-10
+
+### Fixed
+
+ - Log error throws an exception
+
 ## 4.0.0 - 2018-07-04
 
 ### Added
