@@ -141,8 +141,6 @@ Falcon
 Django
 ^^^^^^
 
-For django logging you have to edit a couple of files:
-
 .. code:: bash
 
     django-admin startproject example
@@ -207,7 +205,7 @@ Create a new app
             url('example/', include('example_app.urls'))
         ]
 
-**Note**: The library works with Django 2.x as well, the example is in an earlier version for python 2 compatibility.
+**Note**: The setup for Django 2.x is the same in terms of the logging library, the example is in an earlier version for python 2 compatibility.
 
 General
 ^^^^^^^

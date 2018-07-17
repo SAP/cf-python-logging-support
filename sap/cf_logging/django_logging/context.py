@@ -20,4 +20,5 @@ class DjangoContext(Context):
         request.context[key] = value
 
     def get(self, key, request):
+        _init_context(request)
         return request.context.get(key) if request else None

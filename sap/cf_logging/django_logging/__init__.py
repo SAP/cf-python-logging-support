@@ -21,9 +21,8 @@ class LoggingMiddleware(object):
         self._get_response = get_response
 
     def __call__(self, request):
-        response = self.process_request(request)
-        if response is None:
-            response = self._get_response(request)
+        self.process_request(request)
+        response = self._get_response(request)
 
         response = self.process_response(request, response)
         return response

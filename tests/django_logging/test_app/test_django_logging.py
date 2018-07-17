@@ -1,5 +1,6 @@
 """ Module that tests the integration of cf_logging with Django """
 import sys
+import os
 import pytest
 
 from django.test import Client
@@ -19,6 +20,9 @@ from tests.util import (
 )
 
 from tests.django_logging.test_app.views import UserLoggingView
+
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.django_logging.test_app.settings'
 
 
 @pytest.fixture(autouse=True)
