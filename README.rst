@@ -205,8 +205,6 @@ Create a new app
             url('example/', include('example_app.urls'))
         ]
 
-**Note**: The setup for Django 2.x is the same in terms of the logging library, the example is in an earlier version for python 2 compatibility.
-
 General
 ^^^^^^^
 
