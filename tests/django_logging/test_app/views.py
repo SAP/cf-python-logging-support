@@ -19,6 +19,8 @@ class IndexView(generic.View):
 
 class UserLoggingView(generic.View):
     """ View that logs custom user information """
+    provide_request = False
+
     def __init__(self, *args, **kwargs):
         self.logger, self.stream = config_logger('user.logging')
         super(UserLoggingView, self).__init__(*args, **kwargs)
@@ -27,7 +29,8 @@ class UserLoggingView(generic.View):
         """ Log a custom user message with the logger """
         expected = kwargs.get('expected') or {}
         extra = kwargs.get('extra') or {}
-        extra.update({REQUEST_KEY: request})
+        if self.provide_request:
+            extra.update({REQUEST_KEY: request})
 
         self.logger.log(logging.INFO, 'in route headers', extra=extra)
         assert check_log_record(self.stream, JOB_LOG_SCHEMA, expected) == {}
