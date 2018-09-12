@@ -51,7 +51,18 @@ def test_correlation_id():
     _user_logging(
         {'X-CorrelationID': '298ebf9d-be1d-11e7-88ff-2c44fd152860'},
         {},
-        {'correlation_id': v_str('298ebf9d-be1d-11e7-88ff-2c44fd152860')}
+        {'correlation_id': v_str('298ebf9d-be1d-11e7-88ff-2c44fd152860')},
+        True
+    )
+
+
+def test_missing_request():
+    """ That the correlation id is missing when the request is missing """
+    _user_logging(
+        {'X-CorrelationID': '298ebf9d-be1d-11e7-88ff-2c44fd152860'},
+        {},
+        {'correlation_id': v_str('-')},
+        False
     )
 
 
@@ -74,9 +85,10 @@ def _check_expected_response(response, status_code=200, body='ok'):
     if body is not None:
         assert response.content.decode() == body
 
-def _user_logging(headers, extra, expected):
+
+def _user_logging(headers, extra, expected, provide_request=False):
     sys.modules[settings.ROOT_URLCONF].urlpatterns.append(
-        url('^test/user/logging$', UserLoggingView.as_view(),
+        url('^test/user/logging$', UserLoggingView.as_view(provide_request=provide_request),
             {'extra': extra, 'expected': expected}))
 
 
