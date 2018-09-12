@@ -16,9 +16,13 @@ class DjangoContext(Context):
     """ Stores logging context in Django's request objecct """
 
     def set(self, key, value, request):
+        if request is None:
+            return
         _init_context(request)
         request.context[key] = value
 
     def get(self, key, request):
+        if request is None:
+            return None
         _init_context(request)
         return request.context.get(key) if request else None
