@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## 4.1.0 - 2018-09-13
+
+### Added
+
+ - Django support
+
+
 ## 4.0.1 - 2018-07-10
 
 ### Fixed

@@ -10,7 +10,7 @@ from sap.cf_logging.job_logging.framework import JobFramework
 from sap.cf_logging.record.request_log_record import RequestWebRecord
 from sap.cf_logging.record.simple_log_record import SimpleLogRecord
 
-__version__ = '4.0.1'
+__version__ = '4.1.0'
 
 _SETUP_DONE = False
 FRAMEWORK = None
