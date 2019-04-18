@@ -90,6 +90,16 @@ def test_web_log():
     """ That the custom properties are logged """
     _user_logging({}, {'myprop': 'myval'}, {'myprop': v_str('myval')})
 
+def test_logging_without_request():
+    """ Test logger is usable in non request context """
+    app = falcon.API()
+    _set_up_falcon_logging(app)
+    cf_logging.FRAMEWORK.context.set_correlation_id('value')
+
+    logger, stream = config_logger('main.logger')
+    logger.info('works')
+    assert check_log_record(stream, JOB_LOG_SCHEMA, {'msg': v_str('works')}) == {}
+
 
 def test_correlation_id():
     """ Test the correlation id is logged when coming from the headers """

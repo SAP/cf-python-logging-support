@@ -11,7 +11,8 @@ class FlaskContext(Context):
     """ Stores logging context in Flask's request scope """
 
     def set(self, key, value, request):
-        setattr(g, key, value)
+        if g:
+            setattr(g, key, value)
 
     def get(self, key, request):
-        return getattr(g, key, None)
+        return getattr(g, key, None) if g else None
