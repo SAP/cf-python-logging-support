@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## 4.1.1 - 2019-04-19
+
+### Fixed
+
+ - Fix logging not usable outside request
+
+
 ## 4.1.0 - 2018-09-13
 
 ### Added
