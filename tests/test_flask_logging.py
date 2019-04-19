@@ -66,6 +66,15 @@ def test_correlation_id():
                   {'correlation_id': v_str('298ebf9d-be1d-11e7-88ff-2c44fd152860')})
 
 
+def test_logging_without_request():
+    """ Test logger is usable in non request context """
+    app = Flask(__name__)
+    _set_up_flask_logging(app)
+    logger, stream = config_logger('main.logger')
+    logger.info('works')
+    assert check_log_record(stream, JOB_LOG_SCHEMA, {'msg': v_str('works')}) == {}
+
+
 # Helper functions
 def _set_up_flask_logging(app, level=logging.DEBUG):
     cf_logging._SETUP_DONE = False

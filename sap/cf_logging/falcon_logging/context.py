@@ -11,7 +11,8 @@ class FalconContext(Context):
     """ Stores logging context in Falcon's request object"""
 
     def set(self, key, value, request):
-        request.context[key] = value
+        if request:
+            request.context[key] = value
 
     def get(self, key, request):
         return request.context.get(key) if request else None
