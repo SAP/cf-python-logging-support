@@ -176,7 +176,7 @@ Create a new app
 
         import logging
 
-        from django.http import HTTPResponse
+        from django.http import HttpResponse
         from sap.cf_logging.core.constants import REQUEST_KEY
 
         def index(request):
