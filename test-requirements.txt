@@ -2,7 +2,7 @@ asyncio
 falcon
 falcon-auth
 Flask
-sanic; python_version >= '3.5'
+sanic==19.12.2; python_version >= '3.5'
 aiohttp; python_version >= '3.5'
 sonic182-json-validator==0.0.12
 pytest==3.6.2
@@ -10,4 +10,6 @@ pytest-cov==2.5.1
 pytest-mock==1.6.3
 pylint==1.9.2
 tox
-django < 2.2
+django==1.11; python_version == '2.7'
+django==2.2.13; python_version >= '3.5'
+attrs < 19.2
