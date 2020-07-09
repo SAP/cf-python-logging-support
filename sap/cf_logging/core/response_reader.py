@@ -1,7 +1,7 @@
 """ Module for the ResponseReader class """
 
 
-class ResponseReader(object):
+class ResponseReader(object):  # pylint: disable=useless-object-inheritance
     """
         Helper class for extracting logging-relevant information from HTTP response object
     """

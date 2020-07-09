@@ -52,7 +52,7 @@ def test_falcon_request_log(headers, expected):
     _check_falcon_request_log(app, headers, expected)
 
 
-class User(object):
+class User(object):  # pylint: disable=useless-object-inheritance
     def __init__(self, key, name):
         self.key = key
         self.name = name
@@ -116,7 +116,7 @@ def _set_up_falcon_logging(app, *args):
     falcon_logging.init(app, logging.DEBUG, *args)
 
 
-class UserResourceRoute(object):
+class UserResourceRoute(object):  # pylint: disable=useless-object-inheritance
     def __init__(self, extra, expected):
         self.extra = extra
         self.expected = expected

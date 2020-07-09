@@ -7,24 +7,15 @@ from sap.cf_logging.core.context import Context
 CONTEXT_NAME = 'cf_logger_context'
 
 
-def _init_context(request):
-    if CONTEXT_NAME not in request:
-        request[CONTEXT_NAME] = {}
-
-
 class SanicContext(Context):
     """ Stores logging context in Sanic's request object """
 
     def set(self, key, value, request):
-        if request is None:
-            return
-        _init_context(request)
-        request[CONTEXT_NAME][key] = value
+        if request is not None:
+            setattr(request.ctx, key, value)
 
     def get(self, key, request):
-        if request is None:
-            return None
-        _init_context(request)
-        if key in request[CONTEXT_NAME]:
-            return request[CONTEXT_NAME][key]
+        if request is not None and hasattr(request.ctx, key):
+            return getattr(request.ctx, key)
+
         return None

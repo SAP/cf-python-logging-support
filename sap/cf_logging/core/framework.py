@@ -13,7 +13,7 @@ def _check_instance(obj, clazz):
         raise TypeError('Provided object is not valid {}'.format(clazz.__name__))
 
 
-class Framework(object):
+class Framework(object):  # pylint: disable=useless-object-inheritance
     """ Framework class holds Context, RequestReader, ResponseReader """
 
     def __init__(self, name, context, request_reader, response_reader):
