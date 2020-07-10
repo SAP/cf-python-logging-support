@@ -15,7 +15,7 @@ class SanicContext(Context):
             setattr(request.ctx, key, value)
 
     def get(self, key, request):
-        if request is not None and hasattr(request.ctx, key):
-            return getattr(request.ctx, key)
+        if request is None:
+            return None
 
-        return None
+        return getattr(request.ctx, key, None)
