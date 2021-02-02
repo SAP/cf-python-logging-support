@@ -15,7 +15,7 @@ from sap.cf_logging.falcon_logging.response_reader import FalconResponseReader
 FALCON_FRAMEWORK_NAME = 'falcon.framework'
 
 
-class LoggingMiddleware(object):
+class LoggingMiddleware(object):  # pylint: disable=useless-object-inheritance
     """ Falcon logging middleware """
 
     def __init__(self, logger_name='cf.falcon.logger'):

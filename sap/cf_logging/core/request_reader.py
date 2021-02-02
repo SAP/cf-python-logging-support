@@ -5,7 +5,7 @@ CORRELATION_ID_HEADERS = ['X-Correlation-ID',
                           'X-CorrelationID', 'X-Request-ID', 'X-Vcap-Request-Id']
 
 
-class RequestReader(object):
+class RequestReader(object):  # pylint: disable=useless-object-inheritance
     """
         Helper class for extracting logging-relevant information from HTTP request object
     """

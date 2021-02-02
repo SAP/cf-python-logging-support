@@ -18,7 +18,7 @@ def test_unknown_records_format():
 
 def test_non_json_serializable():
     """ test json formatter handles non JSON serializable object """
-    class _MyClass(object): # pylint: disable=too-few-public-methods
+    class _MyClass(object): # pylint: disable=too-few-public-methods,useless-object-inheritance
         pass
 
     extra = {'cls': _MyClass()}

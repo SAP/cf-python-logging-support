@@ -2,7 +2,7 @@
 
 _CORRELATION_ID_KEY = 'correlation_id'
 
-class Context(object):
+class Context(object):  # pylint: disable=useless-object-inheritance
     """ Class for getting and setting context variables """
 
     def set(self, key, value, request):

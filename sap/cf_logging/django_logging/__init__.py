@@ -13,7 +13,7 @@ from sap.cf_logging.django_logging.response_reader import DjangoResponseReader
 DJANGO_FRAMEWORK_NAME = 'django.framework'
 
 
-class LoggingMiddleware(object):
+class LoggingMiddleware(object):  # pylint: disable=useless-object-inheritance
     """ Django logging middleware """
 
     def __init__(self, get_response, logger_name='cf.django.logger'):
