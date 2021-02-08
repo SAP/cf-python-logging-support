@@ -29,6 +29,22 @@ JOB_LOG_SCHEMA = u.extend(CF_ATTRIBUTES_SCHEMA, {
     'component_type': u.string(r'^application$'),
 })
 
+CUST_FIELD_SCHEMA = u.extend(JOB_LOG_SCHEMA, {
+    '#cf': {
+        'type': dict,
+        'properties': {
+            'string': {'type' : list, 'items': {
+                'type': dict,
+                'properties': {
+                    'v': u.string(u.WORD),
+                    'k': u.string(u.WORD),
+                    'i': u.pos_num()
+                }
+            }}
+        }
+    }
+})
+
 WEB_LOG_SCHEMA = u.extend(CF_ATTRIBUTES_SCHEMA, {
     'type': u.string('^request$'),
     'written_at': u.iso_datetime(),

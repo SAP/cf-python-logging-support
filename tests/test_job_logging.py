@@ -69,6 +69,10 @@ def test_exception_stacktrace():
         assert error == {}
         assert 'ZeroDivisionError' in str(log_json['stacktrace'])
 
+def test_custom_fields_set():
+    """ Test custom fields are set up """
+    cf_logging.init(level=logging.DEBUG, custom_fields={'cf1': None})
+    assert 'cf1' in cf_logging.FRAMEWORK.custom_fields.keys()
 
 def test_thread_safety():
     """ test context keeps separate correlation ID per thread """

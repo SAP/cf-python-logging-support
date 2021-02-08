@@ -77,11 +77,17 @@ def test_logs_correlation_id():
                       '298ebf9d-be1d-11e7-88ff-2c44fd152860')},
                   True)
 
+def test_custom_fields_set():
+    """ Test custom fields are set up """
+    app = sanic.Sanic('test cf_logging')
+    _set_up_sanic_logging(app)
+    assert 'cf1' in cf_logging.FRAMEWORK.custom_fields.keys()
+
 
 # Helper functions
 def _set_up_sanic_logging(app, level=logging.DEBUG):
     cf_logging._SETUP_DONE = False
-    sanic_logging.init(app, level)
+    sanic_logging.init(app, level, custom_fields={'cf1': None})
 
 
 def _user_logging(headers, extra, expected, provide_request=False):

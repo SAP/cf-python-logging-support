@@ -11,10 +11,11 @@ class JobFramework(Framework):
     """ Simple framework using default request and response readers.
     Uses JobContext to keeping properties in memory  """
 
-    def __init__(self, context=None):
+    def __init__(self, context=None, custom_fields=None):
         super(JobFramework, self).__init__(
             JOB_FRAMEWORK_NAME,
             context or JobContext(),
             RequestReader(),
-            ResponseReader()
+            ResponseReader(),
+            custom_fields=custom_fields
         )

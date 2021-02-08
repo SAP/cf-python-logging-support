@@ -47,7 +47,7 @@ class LoggingMiddleware(object):  # pylint: disable=useless-object-inheritance
         logging.getLogger(self._logger_name).info('', extra=extra)
 
 
-def init(app, level=defaults.DEFAULT_LOGGING_LEVEL, username_key='username'):
+def init(app, level=defaults.DEFAULT_LOGGING_LEVEL, username_key='username', custom_fields=None):
     """ Initializes logging in JSON format.
 
     :param app: - Falcon application object
@@ -60,5 +60,6 @@ def init(app, level=defaults.DEFAULT_LOGGING_LEVEL, username_key='username'):
         raise TypeError('application should be instance of Falcon API')
 
     framework = Framework(FALCON_FRAMEWORK_NAME, FalconContext(),
-                          FalconRequestReader(username_key), FalconResponseReader())
+                          FalconRequestReader(username_key), FalconResponseReader(),
+                          custom_fields=custom_fields)
     cf_logging.init(framework, level)

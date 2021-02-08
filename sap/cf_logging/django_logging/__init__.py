@@ -52,13 +52,14 @@ class LoggingMiddleware(object):  # pylint: disable=useless-object-inheritance
         return response
 
 
-def init(level=defaults.DEFAULT_LOGGING_LEVEL):
+def init(level=defaults.DEFAULT_LOGGING_LEVEL, custom_fields=None):
     """
     Initializes logging in JSON format.
 
     :param level: - valid log level from standard logging package (optional)
     """
     framework = Framework(DJANGO_FRAMEWORK_NAME, DjangoContext(),
-                          DjangoRequestReader(), DjangoResponseReader())
+                          DjangoRequestReader(), DjangoResponseReader(),
+                          custom_fields=custom_fields)
 
     cf_logging.init(framework, level)

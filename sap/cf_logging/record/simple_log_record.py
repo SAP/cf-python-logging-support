@@ -33,8 +33,17 @@ class SimpleLogRecord(logging.LogRecord):
 
         self.correlation_id = framework.context.get_correlation_id(request) or defaults.UNKNOWN
 
+        self.custom_fields = {}
+        for key, value in framework.custom_fields.items():
+            if extra and key in extra:
+                if extra[key] is not None:
+                    self.custom_fields[key] = extra[key]
+            elif value is not None:
+                self.custom_fields[key] = value
+
         self.extra = dict((key, value) for key, value in extra.items()
-                          if key not in _SKIP_ATTRIBUTES) if extra else {}
+                          if key not in _SKIP_ATTRIBUTES and
+                          key not in framework.custom_fields.keys()) if extra else {}
         for key, value in self.extra.items():
             setattr(self, key, value)
 
@@ -72,4 +81,14 @@ class SimpleLogRecord(logging.LogRecord):
             record['stacktrace'] = format_stacktrace(stacktrace)
 
         record.update(self.extra)
+        if len(self.custom_fields) > 0:
+            record.update(self._format_custom_fields())
         return record
+
+    def _format_custom_fields(self):
+        res = {"#cf": {"string": []}}
+        for i, (key, value) in enumerate(self.custom_fields.items()):
+            res['#cf']['string'].append(
+                {"k": str(key), "v": str(value), "i": i}
+            )
+        return res
