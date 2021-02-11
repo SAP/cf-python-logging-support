@@ -35,7 +35,7 @@ class CfLogger(logging.Logger):
         return cls(extra, FRAMEWORK, name, level, fn, lno, msg, msgargs, exc_info,
                    func, *args, **kwargs)
 
-def init(cfl_framework=None, level=defaults.DEFAULT_LOGGING_LEVEL):
+def init(cfl_framework=None, level=defaults.DEFAULT_LOGGING_LEVEL, custom_fields=None):
     """ Initialize function. It sets up the logging library to output JSON
         formatted messages.
 
@@ -50,7 +50,7 @@ def init(cfl_framework=None, level=defaults.DEFAULT_LOGGING_LEVEL):
         raise TypeError('expecting framework of type {}'.format(Framework.__name__))
 
     _SETUP_DONE = True
-    FRAMEWORK = cfl_framework or JobFramework()
+    FRAMEWORK = cfl_framework or JobFramework(custom_fields=custom_fields)
 
     logging.setLoggerClass(CfLogger)
 

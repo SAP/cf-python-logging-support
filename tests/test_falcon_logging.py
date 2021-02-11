@@ -109,11 +109,16 @@ def test_correlation_id():
         {'correlation_id': v_str('298ebf9d-be1d-11e7-88ff-2c44fd152860')}
     )
 
+def test_custom_fields_set():
+    """ Test custom fields are set up """
+    app = falcon.API()
+    _set_up_falcon_logging(app)
+    assert 'cf1' in cf_logging.FRAMEWORK.custom_fields.keys()
 
 # Helper functions
 def _set_up_falcon_logging(app, *args):
     cf_logging._SETUP_DONE = False
-    falcon_logging.init(app, logging.DEBUG, *args)
+    falcon_logging.init(app, logging.DEBUG, *args, custom_fields={'cf1': None})
 
 
 class UserResourceRoute(object):  # pylint: disable=useless-object-inheritance

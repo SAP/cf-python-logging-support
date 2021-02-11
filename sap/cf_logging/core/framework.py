@@ -16,7 +16,8 @@ def _check_instance(obj, clazz):
 class Framework(object):  # pylint: disable=useless-object-inheritance
     """ Framework class holds Context, RequestReader, ResponseReader """
 
-    def __init__(self, name, context, request_reader, response_reader):
+    # pylint: disable=too-many-arguments
+    def __init__(self, name, context, request_reader, response_reader, custom_fields=None):
         if not name or not isinstance(name, STR_CLASS):
             raise TypeError('Provided name is not valid string')
         _check_instance(context, Context)
@@ -26,6 +27,12 @@ class Framework(object):  # pylint: disable=useless-object-inheritance
         self._context = context
         self._request_reader = request_reader
         self._response_reader = response_reader
+        self._custom_fields = custom_fields or {}
+
+    @property
+    def custom_fields(self):
+        """ Get the custom fields """
+        return self._custom_fields
 
     @property
     def context(self):

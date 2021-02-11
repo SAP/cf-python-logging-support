@@ -222,6 +222,39 @@ General
 be left untouched. When using Flask and Sanic with the logging library before and
 after request middleware is attached, and it will capture response times for each request.
 
+
+Custom Fields
+"""""""""""""
+
+To use custom fields. Pass a dictionary property custom_fields to the initialize method:
+
+.. code:: python
+
+    import logging
+    from sap import cf_logging
+    cf_logging.init(custom_fields={"foo": "default", "bar": None})
+
+Here we mark the two fields: foo and bar as custom_fields. Logging with:
+
+.. code:: python
+
+    logging.getLogger('my.logger').debug('Hi')
+
+The property foo will be output as a custom field with a value "default". The property bar will not be logged, as it does not have a value.
+
+To log bar, provide a value when logging:
+
+.. code:: python
+
+    logging.getLogger('my.logger').debug('Hi', extra={"bar": "new_value"})
+
+It is also possible to log foo with a different value:
+
+.. code:: python
+
+    logging.getLogger('my.logger').debug('Hi', extra={"foo": "hello"})
+
+
 Setting and getting correlation ID
 """"""""""""""""""""""""""""""""""
 

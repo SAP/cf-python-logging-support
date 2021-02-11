@@ -65,6 +65,10 @@ def test_missing_request():
         False
     )
 
+def test_custom_fields_set():
+    """ Test custom fields are set up """
+    _set_up_django_logging()
+    assert 'cf1' in cf_logging.FRAMEWORK.custom_fields.keys()
 
 def _check_django_request_log(headers, expected):
     _, stream = config_logger('cf.django.logger')
@@ -77,7 +81,7 @@ def _check_django_request_log(headers, expected):
 # Helper functions
 def _set_up_django_logging():
     cf_logging._SETUP_DONE = False # pylint: disable=protected-access
-    django_logging.init()
+    django_logging.init(custom_fields={'cf1': None})
 
 
 def _check_expected_response(response, status_code=200, body='ok'):

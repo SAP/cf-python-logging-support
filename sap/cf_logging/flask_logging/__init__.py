@@ -47,7 +47,7 @@ def after_request(wrapped):
     return _wrapper
 
 
-def init(app, level=defaults.DEFAULT_LOGGING_LEVEL):
+def init(app, level=defaults.DEFAULT_LOGGING_LEVEL, custom_fields=None):
     """ Initializes logging in JSON format.
 
     Adds before and after request handlers to `app` object to enable request info log.
@@ -57,7 +57,7 @@ def init(app, level=defaults.DEFAULT_LOGGING_LEVEL):
     if not isinstance(app, flask.Flask):
         raise TypeError('application should be instance of Flask')
 
-    _init_framework(level)
+    _init_framework(level, custom_fields=custom_fields)
 
     @app.before_request
     @before_request
@@ -70,9 +70,10 @@ def init(app, level=defaults.DEFAULT_LOGGING_LEVEL):
         return response
 
 
-def _init_framework(level):
+def _init_framework(level, custom_fields):
     logging.getLogger('werkzeug').disabled = True
 
     framework = Framework(FLASK_FRAMEWORK_NAME,
-                          FlaskContext(), FlaskRequestReader(), FlaskResponseReader())
+                          FlaskContext(), FlaskRequestReader(), FlaskResponseReader(),
+                          custom_fields=custom_fields)
     cf_logging.init(framework, level)

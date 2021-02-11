@@ -5,7 +5,7 @@ from flask import Flask
 from flask import Response
 from sap import cf_logging
 from sap.cf_logging import flask_logging
-from tests.log_schemas import WEB_LOG_SCHEMA, JOB_LOG_SCHEMA
+from tests.log_schemas import WEB_LOG_SCHEMA, JOB_LOG_SCHEMA, CUST_FIELD_SCHEMA
 from tests.common_test_params import v_str, v_num, auth_basic, get_web_record_header_fixtures
 from tests.util import (
     check_log_record,
@@ -74,11 +74,18 @@ def test_logging_without_request():
     logger.info('works')
     assert check_log_record(stream, JOB_LOG_SCHEMA, {'msg': v_str('works')}) == {}
 
+def test_custom_field_loggin():
+    """ Test custom fields are generated """
+    app = Flask(__name__)
+    _set_up_flask_logging(app)
+    logger, stream = config_logger('main.logger')
+    logger.info('works', extra={'cf1': 'yes'})
+    assert check_log_record(stream, CUST_FIELD_SCHEMA, {}) == {}
 
 # Helper functions
 def _set_up_flask_logging(app, level=logging.DEBUG):
     cf_logging._SETUP_DONE = False
-    flask_logging.init(app, level)
+    flask_logging.init(app, level, custom_fields={'cf1': None, 'cf2': None})
 
 
 def _user_logging(headers, extra, expected):

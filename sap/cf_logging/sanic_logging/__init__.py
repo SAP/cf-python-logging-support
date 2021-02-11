@@ -48,7 +48,7 @@ def after_request(wrapped):
     return _wrapper
 
 
-def init(app, level=defaults.DEFAULT_LOGGING_LEVEL, custom_framework=None):
+def init(app, level=defaults.DEFAULT_LOGGING_LEVEL, custom_framework=None, custom_fields=None):
     """ Initializes logging in JSON format.
 
     Adds before and after request handlers to the `app` object to enable request info log.
@@ -65,7 +65,8 @@ def init(app, level=defaults.DEFAULT_LOGGING_LEVEL, custom_framework=None):
                     SANIC_FRAMEWORK_NAME,
                     SanicContext(),
                     SanicRequestReader(),
-                    SanicResponseReader()
+                    SanicResponseReader(),
+                    custom_fields=custom_fields
                 )
 
     cf_logging.init(framework, level)

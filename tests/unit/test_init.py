@@ -32,8 +32,11 @@ def _make_record(extra):
     return cf_logger.makeRecord('', '', '', '', '', '', '', '', extra=extra)
 
 
-def test_init_cf_logger_simple_log():
+def test_init_cf_logger_simple_log(mocker):
     """ tests CfLogger creates SimpleLogRecord if extra is incomplete """
+    framework = mocker.Mock(Framework)
+    mocker.patch.object(framework, 'custom_fields', return_value=None)
+    cf_logging.init(framework)
     assert isinstance(_make_record(extra={}), SimpleLogRecord)
     assert isinstance(_make_record(extra={REQUEST_KEY: {}}), SimpleLogRecord)
     assert isinstance(_make_record(extra={RESPONSE_KEY: {}}), SimpleLogRecord)
