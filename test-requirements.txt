@@ -1,6 +1,7 @@
 asyncio
 falcon
-falcon-auth
+falcon-auth==1.0.3; python_version == '2.7'
+falcon-auth; python_version >= '3.5'
 Flask
 sanic; python_version >= '3.5'
 aiohttp; python_version >= '3.5'
