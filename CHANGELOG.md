@@ -5,6 +5,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## 4.1.2 - 2021-02-23
+
+### Added
+
+ - Add support for custom fields
+
+### Fixed
+
+ - Fix context store for Sanic
+
+
 ## 4.1.1 - 2019-04-19
 
 ### Fixed
