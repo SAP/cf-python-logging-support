@@ -22,7 +22,6 @@ JOB_LOG_SCHEMA = u.extend(CF_ATTRIBUTES_SCHEMA, {
     'logger': u.string(u.WORD),
     'thread': u.string(u.WORD),
     'level': u.enum(u.LEVEL),
-    'line_no': u.pos_num(),
     'written_at': u.iso_datetime(),
     'written_ts': u.pos_num(),
     'msg': u.string(u.WORD),
