@@ -9,7 +9,7 @@ from sap.cf_logging.core import constants
 
 def format_stacktrace(stacktrace):
     """
-    Removes newline and tab characters
+    Removes tab characters
     Truncates stacktrace to maximum size
 
     :param stacktrace: string representation of a stacktrace
@@ -17,7 +17,7 @@ def format_stacktrace(stacktrace):
     if not isinstance(stacktrace, str):
         return ''
 
-    stacktrace = re.sub('\n|\t', '  ', stacktrace)
+    stacktrace = re.sub('\t', '  ', stacktrace)
 
     if len(stacktrace) <= constants.STACKTRACE_MAX_SIZE:
         return stacktrace
@@ -30,8 +30,8 @@ def format_stacktrace(stacktrace):
         stacktrace, (constants.STACKTRACE_MAX_SIZE // 3) * 2
     )
 
-    new_stacktrace = "-------- STACK TRACE TRUNCATED --------" + stacktrace_beginning +\
-                        "-------- OMITTED --------" + stacktrace_end
+    new_stacktrace = "-------- STACK TRACE TRUNCATED --------\n" + stacktrace_beginning +\
+        "-------- OMITTED --------\n" + stacktrace_end
 
     return new_stacktrace
 

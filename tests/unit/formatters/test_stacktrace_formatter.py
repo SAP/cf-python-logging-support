@@ -19,6 +19,6 @@ def test_stacktrace_truncated(monkeypatch):
     """ Test that stacktrace is truncated when bigger than the stacktrace maximum size """
     monkeypatch.setattr('sap.cf_logging.core.constants.STACKTRACE_MAX_SIZE', 120)
 
-    formatted = format_stacktrace(STACKTRACE)
+    formatted = ''.join(format_stacktrace(STACKTRACE))
     assert "TRUNCATED" in formatted
     assert "OMITTED" in formatted
