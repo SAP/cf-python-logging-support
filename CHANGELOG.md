@@ -5,7 +5,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-## 4.1.2 - 2021-02-23
+## 4.2.2 - 2021-04-01
+
+### Fixed
+
+ - Fix stacktrace format
+
+
+## 4.2.1 - 2021-02-23
 
 ### Added
 
