@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: cf-python-logging-support
-Upstream-Contact: Alexander Penev <alexander.penev@sap.com>, Georgi Vachkov <georgi.vachkov@sap.com>
+Upstream-Contact: Matthias Baesken <matthias.baesken@sap.com>
 Source: https://github.com/SAP/cf-python-logging-support
 Disclaimer: The code in this project may include calls to APIs (“API Calls”) of
  SAP or third-party products or services developed outside of this project
