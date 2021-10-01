@@ -2,6 +2,9 @@
 Python logging library to emit JSON logs in a SAP CloudFoundry environment.
 ===========================================================================
 
+.. image:: https://api.reuse.software/badge/github.com/SAP/cf-python-logging-support
+   :target: https://api.reuse.software/info/github.com/SAP/cf-python-logging-support
+
 This is a collection of support libraries for Python applications running on Cloud Foundry that
 serve two main purposes: provide (a) means to emit structured application log messages and (b)
 instrument web applications of your application stack to collect request metrics.
@@ -340,9 +343,5 @@ See `CHANGELOG file <https://github.com/SAP/cf-python-logging-support/blob/maste
 License
 -------
 
-Copyright (c) 2017 SAP SE or an SAP affiliate company. All rights reserved. This file is licensed
-under the Apache Software License, v. 2 except as noted otherwise in the `LICENSE file <https://github.com/SAP/cf-python-logging-support/blob/master/LICENSE>`__.
-
-
-
+Copyright (c) 2017-2021 SAP SE or an SAP affiliate company and cf-python-logging-support contributors.  Please see our `LICENSE file <https://github.com/SAP/cf-python-logging-support/blob/master/LICENSE>`__ for copyright and license information. Detailed information including third-party components and their licensing/copyright information is available `via the REUSE tool <https://api.reuse.software/info/github.com/SAP/cf-python-logging-support>`__.
 
