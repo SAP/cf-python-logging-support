@@ -77,7 +77,11 @@ class SimpleLogRecord(logging.LogRecord):
 
         if self.levelno == logging.ERROR and self.exc_info:
             stacktrace = ''.join(traceback.format_exception(*self.exc_info))
-            record['stacktrace'] = format_stacktrace(stacktrace).split('\n')
+            stacktrace = format_stacktrace(stacktrace)
+            record['stacktrace'] = stacktrace.split('\n')
+            record['msg'] += "\n"
+            record['msg'] += stacktrace
+
 
         record.update(self.extra)
         if len(self.custom_fields) > 0:
