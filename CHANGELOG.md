@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## 4.2.3 - 2022-03-23
+
+### Fixed
+
+ - Fix stacktrace not showing in kibana
+
 ## 4.2.2 - 2021-04-01
 
 ### Fixed
