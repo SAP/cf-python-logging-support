@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## 4.2.4 - 2022-04-26
+
+### Update
+
+ - Update django version => 2.2.28
+
 ## 4.2.3 - 2022-03-23
 
 ### Fixed
