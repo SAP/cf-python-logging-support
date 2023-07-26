@@ -68,6 +68,25 @@ def test_exception_stacktrace():
 
         assert error == {}
         assert 'ZeroDivisionError' in str(log_json['stacktrace'])
+        assert 'ZeroDivisionError' in log_json["msg"]
+
+
+def test_exception_stacktrace_info_level():
+    """ Test exception stacktrace is logged """
+    cf_logging.init(level=logging.DEBUG)
+    logger, stream = config_logger('cli.test')
+
+    try:
+        return 1 / 0
+    except ZeroDivisionError as exc:
+        logger.info('zero division error', exc_info=exc)
+        log_json = JSONDecoder().decode(stream.getvalue())
+        _, error = JsonValidator(JOB_LOG_SCHEMA).validate(log_json)
+
+        assert error == {}
+        assert 'ZeroDivisionError' in str(log_json['stacktrace'])
+        assert 'ZeroDivisionError' in log_json["msg"]
+
 
 def test_custom_fields_set():
     """ Test custom fields are set up """

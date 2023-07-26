@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
+## 4.2.5 - 2023-07-28
+
+### Fixed
+
+- Include stacktrace also for non-error log level if exc_info is present
+
 ## 4.2.4 - 2022-04-26
 
 ### Update
