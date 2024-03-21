@@ -9,14 +9,19 @@ from json_validator.validator import JsonValidator
 from sap import cf_logging
 from tests.log_schemas import JOB_LOG_SCHEMA
 from tests.util import config_logger
+from sap.cf_logging.record import simple_log_record
 
 # pylint: disable=protected-access
 
 
 @pytest.fixture(autouse=True)
-def before_each():
-    """ reset logging framework """
+def around_each():
+    """ reset logging framework before tests and restore state after tests"""
     cf_logging._SETUP_DONE = False
+    yield
+    simple_log_record.LOGGING_MSG_INCLUDE_STACK = simple_log_record.LOGGING_MSG_INCLUDE_STACK_DEFAULT
+    cf_logging._SETUP_DONE = False
+
 
 
 @pytest.mark.parametrize('log_callback', [
@@ -54,10 +59,21 @@ def test_set_correlation_id():
     assert cf_logging.FRAMEWORK.context.get_correlation_id() == correlation_id
 
 
-def test_exception_stacktrace():
+@pytest.mark.parametrize('stack_in_message', [
+    None,
+    True,
+    False
+])
+def test_exception_stacktrace(stack_in_message):
     """ Test exception stacktrace is logged """
     cf_logging.init(level=logging.DEBUG)
     logger, stream = config_logger('cli.test')
+
+    if stack_in_message is None:
+        assert simple_log_record.LOGGING_MSG_INCLUDE_STACK == simple_log_record.LOGGING_MSG_INCLUDE_STACK_DEFAULT
+        stack_in_message = simple_log_record.LOGGING_MSG_INCLUDE_STACK_DEFAULT
+    else:
+        simple_log_record.LOGGING_MSG_INCLUDE_STACK = stack_in_message
 
     try:
         return 1 / 0
@@ -68,13 +84,28 @@ def test_exception_stacktrace():
 
         assert error == {}
         assert 'ZeroDivisionError' in str(log_json['stacktrace'])
-        assert 'ZeroDivisionError' in log_json["msg"]
+
+        if stack_in_message:
+            assert 'ZeroDivisionError' in log_json["msg"]
+        else:
+            assert 'ZeroDivisionError' not in log_json["msg"]
 
 
-def test_exception_stacktrace_info_level():
+@pytest.mark.parametrize('stack_in_message', [
+    None,
+    True,
+    False
+])
+def test_exception_stacktrace_info_level(stack_in_message):
     """ Test exception stacktrace is logged """
     cf_logging.init(level=logging.DEBUG)
     logger, stream = config_logger('cli.test')
+
+    if stack_in_message is None:
+        assert simple_log_record.LOGGING_MSG_INCLUDE_STACK == simple_log_record.LOGGING_MSG_INCLUDE_STACK_DEFAULT
+        stack_in_message = simple_log_record.LOGGING_MSG_INCLUDE_STACK_DEFAULT
+    else:
+        simple_log_record.LOGGING_MSG_INCLUDE_STACK = stack_in_message
 
     try:
         return 1 / 0
@@ -85,7 +116,10 @@ def test_exception_stacktrace_info_level():
 
         assert error == {}
         assert 'ZeroDivisionError' in str(log_json['stacktrace'])
-        assert 'ZeroDivisionError' in log_json["msg"]
+        if stack_in_message:
+            assert 'ZeroDivisionError' in log_json["msg"]
+        else:
+            assert 'ZeroDivisionError' not in log_json["msg"]
 
 
 def test_custom_fields_set():
