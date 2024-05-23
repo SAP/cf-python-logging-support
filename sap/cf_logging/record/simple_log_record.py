@@ -1,5 +1,6 @@
 """ Module SimpleLogRecord """
 import logging
+import os
 import traceback
 
 from datetime import datetime
@@ -16,6 +17,8 @@ _SKIP_ATTRIBUTES = ["type", "written_at", "written_ts", "correlation_id", "remot
                     "response_time_ms", "response_status", "response_size_b",
                     "response_content_type", "response_sent_at", REQUEST_KEY, RESPONSE_KEY]
 
+LOGGING_MSG_INCLUDE_STACK_DEFAULT = True
+LOGGING_MSG_INCLUDE_STACK = os.getenv('LOGGING_MSG_INCLUDE_STACK', LOGGING_MSG_INCLUDE_STACK_DEFAULT)
 
 class SimpleLogRecord(logging.LogRecord):
     """ SimpleLogRecord class holds data for user logged messages """
@@ -79,8 +82,9 @@ class SimpleLogRecord(logging.LogRecord):
             stacktrace = ''.join(traceback.format_exception(*self.exc_info))
             stacktrace = format_stacktrace(stacktrace)
             record['stacktrace'] = stacktrace.split('\n')
-            record['msg'] += "\n"
-            record['msg'] += stacktrace
+            if LOGGING_MSG_INCLUDE_STACK:
+                record['msg'] += "\n"
+                record['msg'] += stacktrace
 
 
         record.update(self.extra)
