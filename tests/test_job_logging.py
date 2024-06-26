@@ -68,7 +68,7 @@ def test_exception_stacktrace():
 
         assert error == {}
         assert 'ZeroDivisionError' in str(log_json['stacktrace'])
-        assert 'ZeroDivisionError' in log_json["msg"]
+        assert log_json["msg"] == 'zero division error\n'
 
 
 def test_exception_stacktrace_info_level():
@@ -85,7 +85,7 @@ def test_exception_stacktrace_info_level():
 
         assert error == {}
         assert 'ZeroDivisionError' in str(log_json['stacktrace'])
-        assert 'ZeroDivisionError' in log_json["msg"]
+        assert log_json["msg"] == 'zero division error\n'
 
 
 def test_custom_fields_set():
