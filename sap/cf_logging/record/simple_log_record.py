@@ -80,7 +80,6 @@ class SimpleLogRecord(logging.LogRecord):
             stacktrace = format_stacktrace(stacktrace)
             record['stacktrace'] = stacktrace.split('\n')
             record['msg'] += "\n"
-            # record['msg'] += stacktrace
 
 
         record.update(self.extra)
