@@ -47,5 +47,4 @@ def test_stacktrace_is_added_to_msg_field():
     record_object = json.loads(FORMATTER.format(log_record))
     assert "Dummy Exception" in "".join(record_object["stacktrace"])
     expected_msg = "Error found!"
-    expected_msg += "\n"
     assert record_object["msg"] == expected_msg
