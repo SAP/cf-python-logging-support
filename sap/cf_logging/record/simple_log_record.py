@@ -79,7 +79,6 @@ class SimpleLogRecord(logging.LogRecord):
             stacktrace = ''.join(traceback.format_exception(*self.exc_info))
             stacktrace = format_stacktrace(stacktrace)
             record['stacktrace'] = stacktrace.split('\n')
-            record['msg'] += "\n"
 
 
         record.update(self.extra)
