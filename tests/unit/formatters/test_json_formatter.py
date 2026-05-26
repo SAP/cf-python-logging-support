@@ -1,4 +1,5 @@
-""" Tests json log formatting """
+"""Tests json log formatting"""
+
 import json
 import logging
 from sap.cf_logging.job_logging.framework import JobFramework
@@ -11,22 +12,26 @@ FORMATTER = JsonFormatter()
 
 
 def test_unknown_records_format():
-    """ test unknown log records will be delegated to logging.Formatter """
-    log_record = logging.LogRecord('name', LEVEL, FILE, LINE, 'msg', [], EXC_INFO)
-    assert FORMATTER.format(log_record) == 'msg'
+    """test unknown log records will be delegated to logging.Formatter"""
+    log_record = logging.LogRecord("name", LEVEL, FILE, LINE, "msg", [], EXC_INFO)
+    assert FORMATTER.format(log_record) == "msg"
 
 
 def test_non_json_serializable():
-    """ test json formatter handles non JSON serializable object """
-    class _MyClass(object): # pylint: disable=too-few-public-methods,useless-object-inheritance
+    """test json formatter handles non JSON serializable object"""
+
+    class _MyClass(object):  # pylint: disable=too-few-public-methods,useless-object-inheritance
         pass
 
-    extra = {'cls': _MyClass()}
+    extra = {"cls": _MyClass()}
     framework = JobFramework()
-    log_record = SimpleLogRecord(extra, framework, 'name', LEVEL, FILE, LINE, 'msg', [], EXC_INFO)
+    log_record = SimpleLogRecord(
+        extra, framework, "name", LEVEL, FILE, LINE, "msg", [], EXC_INFO
+    )
     record_object = json.loads(FORMATTER.format(log_record))
-    assert record_object.get('cls') is not None
-    assert 'MyClass' in record_object.get('cls')
+    assert record_object.get("cls") is not None
+    assert "MyClass" in record_object.get("cls")
+
 
 def test_stacktrace_is_added_to_msg_field():
     """
@@ -37,13 +42,23 @@ def test_stacktrace_is_added_to_msg_field():
     # Generate exception for the test
     try:
         raise ValueError("Dummy Exception")
-    except ValueError as e:
-        exc_info = (type(e), e, e.__traceback__)
+    except ValueError as err:
+        exc_info = (type(err), err, err.__traceback__)
 
     framework = JobFramework()
     extra = {}
 
-    log_record = SimpleLogRecord(extra, framework, 'name', logging.ERROR, FILE, LINE, 'Error found!', [], exc_info)
+    log_record = SimpleLogRecord(
+        extra,
+        framework,
+        "name",
+        logging.ERROR,
+        FILE,
+        LINE,
+        "Error found!",
+        [],
+        exc_info,
+    )
     record_object = json.loads(FORMATTER.format(log_record))
     assert "Dummy Exception" in "".join(record_object["stacktrace"])
     expected_msg = "Error found!"
